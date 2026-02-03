@@ -1,0 +1,293 @@
+app:
+  description: 基于魔兽世界官网数据提供的角色扮演对话式职业种族推荐工具
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 魔兽世界_职业种族推荐
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.9@8cc65e3d2ce11b03d377ee008dc699c7016601c2646a09c983fcf7c1fd7827ee
+    version: null
+kind: app
+version: 0.5.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: '（酒馆老板放下手中擦拭的酒杯，门上的铃铛声随着你的踏入轻轻响起。他抬头打量着你从门口走来，靴子踩在木地板上发出轻微的吱呀声，直到你在吧台前坐下。酒馆里弥漫着麦酒和烤肉香气，温暖的炉火在角落噼啪作响，几个矮人正低声交谈。老板露出一抹友好的笑容，身体微微前倾，手肘撑在吧台上。）
+
+      酒馆老板：“啊，一位远道而来的客人！看你风尘仆仆的样子，是从荒郊野岭的旧路赶来，还是乘船跨过无尽之海？我是这的老板。坐吧，别拘束——这儿的酒能洗去一身疲惫。不过话说回来，我见过无数像你这样的冒险者，每个人都有自己的故事和道路……告诉我，是什么风把你吹到这酒馆来的？是单纯想喝一杯暖暖身子，还是心里早有了些模糊的念头，想在这广阔世界里找个属于自己的位置？”'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1770119206846-source-llm-target
+      source: '1770119206846'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1770118607248-source-1770122768993-target
+      source: '1770118607248'
+      sourceHandle: source
+      target: '1770122768993'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1770122768993-source-1770119206846-target
+      source: '1770122768993'
+      sourceHandle: source
+      target: '1770119206846'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables: []
+      height: 73
+      id: '1770118607248'
+      position:
+        x: 0
+        y: 15
+      positionAbsolute:
+        x: 0
+        y: 15
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1770119206846'
+          - result
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 20
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-reasoner
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables: []
+        prompt_template:
+        - edition_type: basic
+          id: 2b37e594-98ab-402c-9449-8773f0ef5460
+          jinja2_text: ''
+          role: system
+          text: '{“最高条件”:“功能：你是一个以《魔兽世界》世界背景为导向的地下城主人，你将按照角色扮演的方式为玩家提供建议，根据下述对话、相关上下文及后续问题，针对用户当前提出的问题作出解答。
+
+            角色：酒馆老板
+
+            角色设定和回复方式：你是一个以《魔兽世界》世界背景为导向的地下城之主，你现在扮演的角色是一个酒馆老板，你将按照角色扮演的方式为玩家按照查询知识库结果设计一套问卷推荐职业和种族，职业和种族推荐问卷应考虑玩家善恶观、力量类型选择倾向、武器选择倾向、近战远程倾向、战斗职责倾向、护甲类型倾向、居住地倾向、历史观倾向以及其他角色扮演倾向等，该问卷将引导玩家完成职业推荐，在完成职业推荐前禁止提供任何存在倾向性的信息，问卷的所有问题应使用对话询问的形式作为一个引导型对话存在，禁止提供如“1、2、3、4”、“A、B、C、D”这样的选项，每一次对话只释放出2-4个问题，禁止使用列表格式，在20轮对话内完成职业推荐和种族推荐。”,"酒馆老板的初始信息":"（酒馆老板放下手中擦拭的酒杯，门上的铃铛声随着你的踏入轻轻响起。他抬头打量着你从门口走来，靴子踩在木地板上发出轻微的吱呀声，直到你在吧台前坐下。酒馆里弥漫着麦酒和烤肉香气，温暖的炉火在角落噼啪作响，几个矮人正低声交谈。老板露出一抹友好的笑容，身体微微前倾，手肘撑在吧台上。）
+
+            酒馆老板：“啊，一位远道而来的客人！看你风尘仆仆的样子，是从荒郊野岭的旧路赶来，还是乘船跨过无尽之海？我是这的老板。坐吧，别拘束——这儿的酒能洗去一身疲惫。不过话说回来，我见过无数像你这样的冒险者，每个人都有自己的故事和道路……告诉我，是什么风把你吹到这酒馆来的？是单纯想喝一杯暖暖身子，还是心里早有了些模糊的念头，想在这广阔世界里找个属于自己的位置？”"}'
+        selected: false
+        title: 主要回复逻辑
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: llm
+      position:
+        x: 1026
+        y: 8
+      positionAbsolute:
+        x: 1026
+        y: 8
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm.text#}}'
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 1368
+        y: 0
+      positionAbsolute:
+        x: 1368
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - bLg2Gt5QW35d6KeSPngLEJdraOwKgGrjiRDB0K2FrJUfHezi6kQrVKbpCULkgPSF
+        metadata_filtering_mode: automatic
+        metadata_model_config:
+          completion_params:
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          top_k: 4
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1770122768993'
+        - text
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 90
+      id: '1770119206846'
+      position:
+        x: 684
+        y: 7
+      positionAbsolute:
+        x: 684
+        y: 7
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            response_format: json_object
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 1c4f1bf1-69be-4e5c-b8f2-7e6cd1973626
+          role: system
+          text: '{"工具属性":"你是一个魔兽世界职业和种族推荐问卷的解释器，请根据上下文和用户输入的内容输出对向量知识库的查询条件。",
+
+            "输出格式要求":"请以JSON格式输出，包含以下字段：
+
+            - "query_conditions": 一个数组，包含所有查询关键词或短语
+
+            - "query_type": 字符串，描述查询类型（如：职业推荐、种族特性、组合分析等）"}'
+        selected: false
+        title: 知识检索预处理
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1770122768993'
+      position:
+        x: 342
+        y: 8
+      positionAbsolute:
+        x: 342
+        y: 8
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -927.8313772737881
+      y: 389.35841777730013
+      zoom: 1.0610015965572788
+  rag_pipeline_variables: []
