@@ -1,0 +1,581 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 魔兽世界_插件生成器
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.9@8cc65e3d2ce11b03d377ee008dc699c7016601c2646a09c983fcf7c1fd7827ee
+    version: null
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: eanrach/create_files_from_structure:0.0.1@c2c5071e0aef5f219810644c42f4ef9c3b725bb3bcb0c2bb3a1178a5d25cd1c7
+    version: null
+kind: app
+version: 0.5.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1770209389477-source-1770209377598-target
+      selected: false
+      source: '1770209389477'
+      sourceHandle: source
+      target: '1770209377598'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1770209368876-source-1770209389477-target
+      selected: false
+      source: '1770209368876'
+      sourceHandle: source
+      target: '1770209389477'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1770209377598-source-1770212086267-target
+      selected: false
+      source: '1770209377598'
+      sourceHandle: source
+      target: '1770212086267'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: 1770212086267-source-1770212177596-target
+      selected: false
+      source: '1770212086267'
+      sourceHandle: source
+      target: '1770212177596'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1770212177596-true-1770210380497-target
+      selected: false
+      source: '1770212177596'
+      sourceHandle: 'true'
+      target: '1770210380497'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1770212177596-3ad41432-e90c-416a-882f-1f6b182ca026-1770212583312-target
+      source: '1770212177596'
+      sourceHandle: 3ad41432-e90c-416a-882f-1f6b182ca026
+      target: '1770212583312'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1770210380497-source-1770241452691-target
+      source: '1770210380497'
+      sourceHandle: source
+      target: '1770241452691'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: answer
+      id: 1770241452691-source-1770233114801-target
+      source: '1770241452691'
+      sourceHandle: source
+      target: '1770233114801'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables: []
+      height: 73
+      id: '1770209368876'
+      position:
+        x: 0
+        y: 49
+      positionAbsolute:
+        x: 0
+        y: 49
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - hK9chCbrtmWQKT7Tgj593kGCGzbxMYdlJ9n2y9pNerhLIQl9Lx1+AQm0fh2/a3tB
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          top_k: 4
+        query_variable_selector:
+        - '1770209389477'
+        - text
+        retrieval_mode: multiple
+        selected: false
+        title: 查询现有插件库和API库
+        type: knowledge-retrieval
+      height: 90
+      id: '1770209377598'
+      position:
+        x: 684
+        y: 41
+      positionAbsolute:
+        x: 684
+        y: 41
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: e3d27906-d864-43f9-b86f-f838931be1e5
+          role: system
+          text: '# 工具属性
+
+            你是一个信息预处理工具，负责理解用户的向量数据库查询意图并提供建议答案
+
+            # 主要功能
+
+            根据用户的问题格式化关键词输出查询知识库的条件，并扩展英文查询条件
+
+            # 输出格式
+
+            {
+
+            "query_conditions": ["关键词1", "关键词2", "同义词"],
+
+            "query_type": "职业特性|种族文化|历史背景|职业对比",
+
+            "query_context": "简要说明当前对话阶段和上下文"
+
+            }
+
+            # 示例
+
+            用户说："我更喜欢用魔法解决问题"
+
+            输出：
+
+            {
+
+            "query_conditions": ["魔法职业", "法师", "术士", "牧师", "魔法天赋"],
+
+            "query_type": "职业特性",
+
+            "query_context": "用户在表达战斗偏好，倾向于施法者"
+
+            }'
+        - id: 0a62ec9d-74af-4708-8220-3979694be0d5
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        structured_output_enabled: false
+        title: 知识检索预处理
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1770209389477'
+      position:
+        x: 342
+        y: 42
+      positionAbsolute:
+        x: 342
+        y: 42
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1770209377598'
+          - result
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-reasoner
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 1c7aa7da-ee4f-4027-8106-0e46847cda1b
+          role: system
+          text: "# 任务\n根据用户输入和上下文提供插件的文件结构、代码或优化建议\n## 生成文件结构\n提供一个JSON格式的文件结构列表\n\
+            ## 生成代码\n提供每个文件的文件名和代码内容\n## 优化建议\n提供需要优化的文件的文件名、行数和整个文件修改后的代码\n# 输出格式\n\
+            请以JSON格式输出，要求不使用类似代码块等markdown语法的纯文本，包含以下字段：\n- \"file_structure\": [文件结构列表]\n\
+            - \"files\": [\n    {\n      \"filename\": \"文件名\",\n      \"content\"\
+            : \"文件内容\"\n    }\n  ]\n\n# 示例输出\n{ \n  \"file_structure\": [\n    \"\
+            src/main.py\",\n    \"src/utils/helper.py\",\n    \"config/settings.json\"\
+            \n  ],\n  \"files\": [\n    {\n      \"filename\": \"src/main.py\",\n\
+            \      \"content\": \"def main():\\n    print('Hello World')\"\n    },\n\
+            \    {\n      \"filename\": \"src/utils/helper.py\",\n      \"content\"\
+            : \"def helper_function():\\n    return 'Helper'\"\n    }\n  ]\n}"
+        - id: 1b825d26-b55a-4a2d-9ca8-9e6cd08ebbb8
+          role: user
+          text: '{{#sys.query#}}'
+        reasoning_format: separated
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              structure_file_list:
+                items:
+                  additionalProperties: false
+                  properties: {}
+                  required: []
+                  type: object
+                type: array
+            required: []
+            type: object
+        structured_output_enabled: false
+        title: 生成代码
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1770210380497'
+      position:
+        x: 1730
+        y: 59
+      positionAbsolute:
+        x: 1730
+        y: 59
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1770209377598'
+          - result
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: faf3fcf0-b2c7-45b2-9ada-0c12004a897a
+          role: system
+          text: "# 工具属性\n你是一个插件构建工具的需求分析节点\n# 任务\n根据上下文判断用户的需求是否需要或构建插件、现有的魔兽世界api能否实现\n\
+            # 输出格式\n{\n    \"need_plugin\": true/false,\n    \"reason\": \"详细说明为什么不需要构建、修改插件或不能实现的原因\"\
+            \n}\n# 示例\n{\n    \"need_plugin\": false,\n    \"reason\": \"魔兽世界现有API已经提供了完整的拍卖行查询功能，包括物品搜索、价格排序和批量获取，无需额外插件即可实现用户的需求。\"\
+            \n}"
+        - id: 274c17f3-831c-41d2-92c4-fd6d33b160aa
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              need_plugin:
+                description: 判断结果
+                enum:
+                - 'True'
+                - 'False'
+                type: string
+              reason:
+                description: 原因
+                type: string
+            required: []
+            type: object
+        structured_output_enabled: true
+        title: 需求分析
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1770212086267'
+      position:
+        x: 1026
+        y: 42
+      positionAbsolute:
+        x: 1026
+        y: 42
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 25db30e6-13b8-4da3-b7b3-f8ae1b45da0b
+            value: 'True'
+            varType: object
+            variable_selector:
+            - '1770212086267'
+            - structured_output
+            - need_plugin
+          id: 'true'
+          logical_operator: and
+        - case_id: 3ad41432-e90c-416a-882f-1f6b182ca026
+          conditions:
+          - comparison_operator: is
+            id: 6db379c2-eba3-4215-9ea8-eeefb6cd2abe
+            value: 'False'
+            varType: object
+            variable_selector:
+            - '1770212086267'
+            - structured_output
+            - need_plugin
+          id: 3ad41432-e90c-416a-882f-1f6b182ca026
+          logical_operator: and
+        selected: false
+        title: 可行性判断
+        type: if-else
+      height: 172
+      id: '1770212177596'
+      position:
+        x: 1368
+        y: 0
+      positionAbsolute:
+        x: 1368
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1770212086267.structured_output.reason#}}'
+        selected: false
+        title: 需求判断失败
+        type: answer
+        variables: []
+      height: 103
+      id: '1770212583312'
+      position:
+        x: 1730
+        y: 227
+      positionAbsolute:
+        x: 1730
+        y: 227
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '需求分析：
+
+          {{#1770212086267.structured_output.reason#}}
+
+          已创建工具：
+
+          {{#1770241452691.files#}}'
+        selected: true
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 138
+      id: '1770233114801'
+      position:
+        x: 2414
+        y: 34
+      positionAbsolute:
+        x: 2414
+        y: 34
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: "接收一个包含`file_structure`和`files`的JSON字符串，创建相应的目录和文件，并返回完整目录压缩包。\n\
+              输入示例：\n{\n    {\n      \"file_structure\": [\n        \"path/to/file1.py\"\
+              ,\n        \"path/to/file2.txt\"\n      ],\n      \"files\": [\n   \
+              \     {\n          \"filename\": \"path/to/file1.py\",\n          \"\
+              content\": \"print('Hello World')\"\n        },\n        {\n       \
+              \   \"filename\": \"path/to/file2.txt\",\n          \"content\": \"\
+              This is a text file\"\n        }\n      ]\n    }\n}"
+            ja_JP: "接收一个包含`file_structure`和`files`的JSON字符串，创建相应的目录和文件，并返回完整目录压缩包。\n\
+              输入示例：\n{\n    {\n      \"file_structure\": [\n        \"path/to/file1.py\"\
+              ,\n        \"path/to/file2.txt\"\n      ],\n      \"files\": [\n   \
+              \     {\n          \"filename\": \"path/to/file1.py\",\n          \"\
+              content\": \"print('Hello World')\"\n        },\n        {\n       \
+              \   \"filename\": \"path/to/file2.txt\",\n          \"content\": \"\
+              This is a text file\"\n        }\n      ]\n    }\n}"
+            pt_BR: "接收一个包含`file_structure`和`files`的JSON字符串，创建相应的目录和文件，并返回完整目录压缩包。\n\
+              输入示例：\n{\n    {\n      \"file_structure\": [\n        \"path/to/file1.py\"\
+              ,\n        \"path/to/file2.txt\"\n      ],\n      \"files\": [\n   \
+              \     {\n          \"filename\": \"path/to/file1.py\",\n          \"\
+              content\": \"print('Hello World')\"\n        },\n        {\n       \
+              \   \"filename\": \"path/to/file2.txt\",\n          \"content\": \"\
+              This is a text file\"\n        }\n      ]\n    }\n}"
+            zh_Hans: "接收一个包含`file_structure`和`files`的JSON字符串，创建相应的目录和文件，并返回完整目录压缩包。\n\
+              输入示例：\n{\n    {\n      \"file_structure\": [\n        \"path/to/file1.py\"\
+              ,\n        \"path/to/file2.txt\"\n      ],\n      \"files\": [\n   \
+              \     {\n          \"filename\": \"path/to/file1.py\",\n          \"\
+              content\": \"print('Hello World')\"\n        },\n        {\n       \
+              \   \"filename\": \"path/to/file2.txt\",\n          \"content\": \"\
+              This is a text file\"\n        }\n      ]\n    }\n}"
+          label:
+            en_US: structure
+            ja_JP: フォルダ構造
+            pt_BR: Estrutura de arquivo
+            zh_Hans: 目录结构
+          llm_description: "接收一个包含`file_structure`和`files`的JSON字符串，创建相应的目录和文件，并返回完整目录压缩包。\n\
+            输入示例：\n{\n    {\n      \"file_structure\": [\n        \"path/to/file1.py\"\
+            ,\n        \"path/to/file2.txt\"\n      ],\n      \"files\": [\n     \
+            \   {\n          \"filename\": \"path/to/file1.py\",\n          \"content\"\
+            : \"print('Hello World')\"\n        },\n        {\n          \"filename\"\
+            : \"path/to/file2.txt\",\n          \"content\": \"This is a text file\"\
+            \n        }\n      ]\n    }\n}"
+          max: null
+          min: null
+          name: structure
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        params:
+          structure: ''
+        plugin_id: eanrach/create_files_from_structure
+        plugin_unique_identifier: eanrach/create_files_from_structure:0.0.1@c2c5071e0aef5f219810644c42f4ef9c3b725bb3bcb0c2bb3a1178a5d25cd1c7
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=f1441c071a96f87326f5eb2ae2bfc5a570e9260e7d2b74c2ac15df4037231c64.svg
+        provider_id: eanrach/create_files_from_structure/create_files_from_structure
+        provider_name: eanrach/create_files_from_structure/create_files_from_structure
+        provider_type: builtin
+        selected: false
+        title: 生成文件
+        tool_configurations: {}
+        tool_description: "接收一个包含`file_structure`和`files`的JSON字符串，创建相应的目录和文件，并返回完整目录压缩包。\n\
+          输入示例：\n{\n    {\n      \"file_structure\": [\n        \"path/to/file1.py\"\
+          ,\n        \"path/to/file2.txt\"\n      ],\n      \"files\": [\n       \
+          \ {\n          \"filename\": \"path/to/file1.py\",\n          \"content\"\
+          : \"print('Hello World')\"\n        },\n        {\n          \"filename\"\
+          : \"path/to/file2.txt\",\n          \"content\": \"This is a text file\"\
+          \n        }\n      ]\n    }\n}"
+        tool_label: Structured File Creation
+        tool_name: create_files_from_structure
+        tool_node_version: '2'
+        tool_parameters:
+          structure:
+            type: mixed
+            value: '{{#1770210380497.text#}}'
+        type: tool
+      height: 52
+      id: '1770241452691'
+      position:
+        x: 2072
+        y: 77
+      positionAbsolute:
+        x: 2072
+        y: 77
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -3663.4285714285716
+      y: 147.85714285714283
+      zoom: 2
+  rag_pipeline_variables: []
