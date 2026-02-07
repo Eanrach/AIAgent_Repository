@@ -32,14 +32,10 @@ workflow:
       - remote_url
       enabled: false
       fileUploadConfig:
-        attachment_image_file_size_limit: 2
         audio_file_size_limit: 50
         batch_count_limit: 5
         file_size_limit: 15
-        file_upload_limit: 50
-        image_file_batch_limit: 10
         image_file_size_limit: 10
-        single_chunk_attachment_limit: 10
         video_file_size_limit: 100
         workflow_file_upload_limit: 10
       image:
@@ -60,7 +56,7 @@ workflow:
       enabled: false
     suggested_questions: []
     suggested_questions_after_answer:
-      enabled: true
+      enabled: false
     text_to_speech:
       enabled: false
       language: ''
@@ -76,17 +72,6 @@ workflow:
       target: answer
       targetHandle: target
       type: custom
-    - data:
-        isInLoop: false
-        sourceType: knowledge-retrieval
-        targetType: llm
-      id: 1770119206846-source-llm-target
-      source: '1770119206846'
-      sourceHandle: source
-      target: llm
-      targetHandle: target
-      type: custom
-      zIndex: 0
     - data:
         isInLoop: false
         sourceType: start
@@ -109,6 +94,97 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: question-classifier
+      id: 1770119206846-source-1770179022421-target
+      source: '1770119206846'
+      sourceHandle: source
+      target: '1770179022421'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: answer
+      id: 1770179022421-2-1770179245235-target
+      source: '1770179022421'
+      sourceHandle: '2'
+      target: '1770179245235'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: question-classifier
+      id: 1770179022421-1-1770379526302-target
+      source: '1770179022421'
+      sourceHandle: '1'
+      target: '1770379526302'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1770379526302-1-llm-target
+      source: '1770379526302'
+      sourceHandle: '1'
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1770379526302-2-1770380223078-target
+      source: '1770379526302'
+      sourceHandle: '2'
+      target: '1770380223078'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1770380223078-source-17703806152700-target
+      source: '1770380223078'
+      sourceHandle: source
+      target: '17703806152700'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 17703806152700-source-17703806754120-target
+      source: '17703806152700'
+      sourceHandle: source
+      target: '17703806754120'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 17703806754120-source-answer-target
+      source: '17703806754120'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         selected: false
@@ -119,10 +195,10 @@ workflow:
       id: '1770118607248'
       position:
         x: 0
-        y: 15
+        y: 97
       positionAbsolute:
         x: 0
-        y: 15
+        y: 97
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -157,13 +233,73 @@ workflow:
           id: 2b37e594-98ab-402c-9449-8773f0ef5460
           jinja2_text: ''
           role: system
-          text: '{“最高条件”:“功能：你是一个以《魔兽世界》世界背景为导向的地下城主人，你将按照角色扮演的方式为玩家提供建议，根据下述对话、相关上下文及后续问题，针对用户当前提出的问题作出解答。
+          text: '<system_purpose>
 
-            角色：酒馆老板
+            你是一个《魔兽世界》世界观下的扮演酒馆老板。
 
-            角色设定和回复方式：你是一个以《魔兽世界》世界背景为导向的地下城之主，你现在扮演的角色是一个酒馆老板，你将按照角色扮演的方式为玩家按照查询知识库结果设计一套问卷推荐职业和种族，职业和种族推荐问卷应考虑玩家善恶观、力量类型选择倾向、武器选择倾向、近战远程倾向、战斗职责倾向、护甲类型倾向、居住地倾向、历史观倾向以及其他角色扮演倾向等，该问卷将引导玩家完成职业推荐，在完成职业推荐前禁止提供任何存在倾向性的信息，问卷的所有问题应使用对话询问的形式作为一个引导型对话存在，禁止提供如“1、2、3、4”、“A、B、C、D”这样的选项，每一次对话只释放出2-4个问题，禁止使用列表格式，在20轮对话内完成职业推荐和种族推荐。”,"酒馆老板的初始信息":"（酒馆老板放下手中擦拭的酒杯，门上的铃铛声随着你的踏入轻轻响起。他抬头打量着你从门口走来，靴子踩在木地板上发出轻微的吱呀声，直到你在吧台前坐下。酒馆里弥漫着麦酒和烤肉香气，温暖的炉火在角落噼啪作响，几个矮人正低声交谈。老板露出一抹友好的笑容，身体微微前倾，手肘撑在吧台上。）
+            </system_purpose>
 
-            酒馆老板：“啊，一位远道而来的客人！看你风尘仆仆的样子，是从荒郊野岭的旧路赶来，还是乘船跨过无尽之海？我是这的老板。坐吧，别拘束——这儿的酒能洗去一身疲惫。不过话说回来，我见过无数像你这样的冒险者，每个人都有自己的故事和道路……告诉我，是什么风把你吹到这酒馆来的？是单纯想喝一杯暖暖身子，还是心里早有了些模糊的念头，想在这广阔世界里找个属于自己的位置？”"}'
+
+
+            <character_setting>
+
+            - 身份：艾泽拉斯大陆某处温情酒馆的老板。
+
+            - 语气：亲切、睿智、带有冒险气息，多用口语化的角色扮演描述。
+
+            </character_setting>
+
+
+
+            <task_rules>
+
+            - 核心任务：根据 <knowledge_base> 中的信息，通过对话引导玩家选择职业和种族。
+
+            - 引导规则：
+
+              1. 考察点：善恶观、力量倾向（魔法/物理）、作战距离（近战/远程）、职责（坦克/治疗/输出）、武器等。
+
+              2. 形式：每次对话仅提出 2-4 个问题，严禁使用编号列表（如 1. 2. 3.）。
+
+              3. 限制：20 轮对话内必须给出明确建议、建议的职业和种族必须是魔兽世界中玩家可选择；完成推荐前严禁透露任何倾向性结论。
+
+            </task_rules>
+
+
+
+            <knowledge_base>
+
+            {{#1770119206846.result#}}
+
+            </knowledge_base>
+
+
+
+            <context>
+
+                <current_scene>
+
+                    玩家刚刚推门进入酒馆，你作为酒馆老板已经完成了初步的欢迎（开场白）。
+
+                </current_scene>
+
+                <past_action>
+
+                    你已经询问了玩家是想喝酒还是寻找自己的位置。
+
+                </past_action>
+
+            </context>
+
+
+
+            <response_guideline>
+
+                - 如果玩家的回复是针对欢迎词的（例如“我想找个职业”），请立刻进入职业询问的第一步。
+
+                - 严禁重复开场白的内容，直接从对话的第二阶段开始。
+
+            </response_guideline>'
         selected: false
         title: 主要回复逻辑
         type: llm
@@ -172,30 +308,32 @@ workflow:
       height: 88
       id: llm
       position:
-        x: 1026
-        y: 8
+        x: 1750
+        y: 192
       positionAbsolute:
-        x: 1026
-        y: 8
-      selected: true
+        x: 1750
+        y: 192
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     - data:
-        answer: '{{#llm.text#}}'
+        answer: '{{#llm.text#}}
+
+          {{#17703806754120.text#}}'
         selected: false
         title: 直接回复
         type: answer
         variables: []
-      height: 103
+      height: 122
       id: answer
       position:
-        x: 1368
-        y: 0
+        x: 2796
+        y: 324
       positionAbsolute:
-        x: 1368
-        y: 0
+        x: 2796
+        y: 324
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -203,7 +341,7 @@ workflow:
       width: 242
     - data:
         dataset_ids:
-        - bLg2Gt5QW35d6KeSPngLEJdraOwKgGrjiRDB0K2FrJUfHezi6kQrVKbpCULkgPSF
+        - hK9chCbrtmWQKT7Tgj593kGCGzbxMYdlJ9n2y9pNerhLIQl9Lx1+AQm0fh2/a3tB
         metadata_filtering_mode: automatic
         metadata_model_config:
           completion_params:
@@ -228,10 +366,10 @@ workflow:
       id: '1770119206846'
       position:
         x: 684
-        y: 7
+        y: 89
       positionAbsolute:
         x: 684
-        y: 7
+        y: 89
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -261,13 +399,14 @@ workflow:
         prompt_template:
         - id: 1c4f1bf1-69be-4e5c-b8f2-7e6cd1973626
           role: system
-          text: '{"工具属性":"你是一个魔兽世界职业和种族推荐问卷的解释器，请根据上下文和用户输入的内容输出对向量知识库的查询条件。",
-
-            "输出格式要求":"请以JSON格式输出，包含以下字段：
-
-            - "query_conditions": 一个数组，包含所有查询关键词或短语
-
-            - "query_type": 字符串，描述查询类型（如：职业推荐、种族特性、组合分析等）"}'
+          text: "    # 任务\n    根据用户对话内容，生成知识库检索条件\n    \n    # 输入分析\n    1. 提取关键词：从对话中提取职业、种族、特性相关词汇\n\
+                2. 识别意图：判断用户当前讨论的主题阶段\n    3. 推断需求：基于对话历史推测可能需要的背景知识\n    \n    #\
+            \ 输出格式\n输出使用JSON格式\n    {\n      \"query_conditions\": [\"关键词1\", \"关键词2\"\
+            , \"同义词\"],\n      \"query_type\": \"职业特性|种族文化|历史背景|职业对比\",\n      \"\
+            query_context\": \"简要说明当前对话阶段和上下文\"\n    }\n    \n    # 示例\n    用户说：\"\
+            我更喜欢用魔法解决问题\"\n    输出：\n    {\n      \"query_conditions\": [\"魔法职业\",\
+            \ \"法师\", \"术士\", \"牧师\", \"魔法天赋\"],\n      \"query_type\": \"职业特性\",\n\
+                  \"query_context\": \"用户在表达战斗偏好，倾向于施法者\"\n    }"
         selected: false
         title: 知识检索预处理
         type: llm
@@ -277,17 +416,301 @@ workflow:
       id: '1770122768993'
       position:
         x: 342
-        y: 8
+        y: 90
       positionAbsolute:
         x: 342
-        y: 8
+        y: 90
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        classes:
+        - id: '1'
+          name: "角色扮演对话\n  特征：\n  - 用户配合角色扮演设定\n  - 表达未确定的偏好或迷茫\n  - 使用沉浸式语言\n  -\
+            \ 愿意通过对话探索"
+        - id: '2'
+          name: "直接查询\n  特征：\n  - 用户已有明确目标\n  - 询问具体数值或强度\n  - 使用游戏术语\n  - 要求直接答案"
+        instruction: '# 分类任务
+
+          根据用户输入判断对话类型
+
+
+          #用户输入
+
+          {{#sys.query#}}'
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        query_variable_selector:
+        - '1770122768993'
+        - text
+        selected: false
+        title: 问题分类器
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 170
+      id: '1770179022421'
+      position:
+        x: 1026
+        y: 49
+      positionAbsolute:
+        x: 1026
+        y: 49
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: "（老板放下酒杯，认真地看着你）\n  \n  啊，看来你心里已经有了明确的念头！在这片广阔的土地上，每个冒险者都有自己的道路要闯。既然你已经有了方向，我就不多叨扰了。\n\
+          \  \n  不过记住，伙计：力量的强弱会随风云变幻，但真正塑造传奇的，是一颗坚定的心。无论你选择什么道路，都勇敢地走下去吧！"
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 212
+      id: '1770179245235'
+      position:
+        x: 1388
+        y: 0
+      positionAbsolute:
+        x: 1388
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        classes:
+        - id: '1'
+          name: '特征：
+
+            - 用户在以角色扮演的方式回复问题
+
+            - 用户给出过存在倾向性的答案
+
+            - 用户未否认全部逻辑与问题'
+        - id: '2'
+          name: '特征：
+
+            - 用户否认了一切逻辑与问题
+
+            - 用户未给出任何存在倾向性的答案'
+        instruction: '# 分类任务
+
+          综合上下文和用户输入判断用户意图
+
+
+          # 用户输入
+
+          {{#sys.query#}}
+
+          '
+        instructions: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          window:
+            enabled: true
+            size: 20
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        query_variable_selector:
+        - sys
+        - query
+        selected: false
+        title: 问题分类器 2
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 170
+      id: '1770379526302'
+      position:
+        x: 1388
+        y: 292
+      positionAbsolute:
+        x: 1388
+        y: 292
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 20
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-reasoner
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: c88f86e3-ce08-453b-97b2-78f1e5a5e154
+          role: system
+          text: "    # 角色\n    你是一个意图解释器\n\n    # 背景\n    到达此节点说明用户在前置对话中用户否认了一切逻辑与问题，或未给出任何存在倾向性的答案。\n\
+            \n    # 任务\n    根据用户对话内容和上下文，生成知识库检索条件\n    \n    # 输入分析\n    1. 提取关键词：从对话中提取职业、种族、特性相关词汇\n\
+                2. 识别意图：判断用户当前讨论的主题阶段\n    3. 推断需求：基于对话历史推测可能需要的背景知识\n\n    # 限制\n\
+            \    1. 禁止输出文字提示和任何markdown标识\n\n    # 输出格式\n    {\n      \"query_conditions\"\
+            : [\"关键词1\", \"关键词2\", \"同义词\"],\n      \"query_type\": \"职业特性|种族文化|历史背景|职业对比\"\
+            ,\n      \"query_context\": \"简要说明当前对话阶段和上下文\"\n    }\n    \n    # 示例\n\
+                用户说：\"我更喜欢用魔法解决问题\"\n    输出：\n    {\n      \"query_conditions\": [\"\
+            魔法职业\", \"法师\", \"术士\", \"牧师\", \"魔法天赋\"],\n      \"query_type\": \"职业特性\"\
+            ,\n      \"query_context\": \"用户在表达战斗偏好，倾向于施法者\"\n    }"
+        - id: 629d8357-6479-4a7f-abe8-29ef6f8bd50b
+          role: user
+          text: '{{#sys.query#}}'
+        reasoning_format: separated
+        selected: false
+        title: 知识检索预处理-无倾向性扩展查询
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1770380223078'
+      position:
+        x: 1750
+        y: 361
+      positionAbsolute:
+        x: 1750
+        y: 361
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - hK9chCbrtmWQKT7Tgj593kGCGzbxMYdlJ9n2y9pNerhLIQl9Lx1+AQm0fh2/a3tB
+        metadata_filtering_mode: automatic
+        metadata_model_config:
+          completion_params:
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          top_k: 4
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1770380223078'
+        - text
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索-无倾向性节点
+        type: knowledge-retrieval
+      height: 90
+      id: '17703806152700'
+      position:
+        x: 2092
+        y: 360
+      positionAbsolute:
+        x: 2092
+        y: 360
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1770119206846'
+          - result
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            '
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 20
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-reasoner
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables: []
+        prompt_template:
+        - edition_type: basic
+          id: 2b37e594-98ab-402c-9449-8773f0ef5460
+          jinja2_text: ''
+          role: system
+          text: "<system_purpose>\n你是一个《魔兽世界》世界观下的扮演酒馆老板。\n</system_purpose>\n\n\n\
+            <character_setting>\n- 身份：艾泽拉斯大陆某处温情酒馆的老板。\n- 语气：亲切、睿智、带有冒险气息，多用口语化的角色扮演描述。\n\
+            </character_setting>\n\n\n<task_rules>\n- 核心任务：根据 <knowledge_base> 中的信息，通过对话引导玩家选择职业和种族。\n\
+            - 引导规则：\n  1. 考察点：善恶观、力量倾向（魔法/物理）、作战距离（近战/远程）、职责（坦克/治疗/输出）、武器等。\n  2.\
+            \ 形式：每次对话仅提出 2-4 个问题，严禁使用编号列表（如 1. 2. 3.）。\n  3. 限制：20 轮对话内必须给出明确建议、建议的职业和种族必须是魔兽世界中玩家可选择；完成推荐前严禁透露任何倾向性结论。\n\
+            </task_rules>\n\n\n<knowledge_base>\n{{#1770119206846.result#}}\n</knowledge_base>\n\
+            \n\n<pre_node_analysis>\n    当前节点已接收来自 [问题分类器] 的过滤信号。 如果用户表现出“拒绝回答”、“否定逻辑”或“压力测试”，说明流程已进入“非标准引导环节”。\
+            \ \n</pre_node_analysis>\n\n\n<context_background> \n    <scene_state>\
+            \ \n        酒馆老板（你）已经向客人（用户）发出了邀请，但客人的反应可能并不积极。\n     </scene_state>\n\
+            \     <mission_objective> \n        1. 保持酒馆老板的人设，无论用户如何挑衅或拒绝，不得脱离角色。 \n\
+            \        2. 针对“否定回答”，不要强行推进问卷，而是利用角色身份进行软处理（例如：感叹客人的谨慎，或用幽默化解尴尬）。 \n \
+            \       3. 严禁提供带有数值强度的“标准答案”，即使被用户逼问，也要以“每个人眼中的强弱不同”为由化解。 \n     </mission_objective>\
+            \ \n</context_background> \n<handling_strategies> \n    <on_negation>\n\
+            \        当用户否定或拒绝时，酒馆老板应表现出包容，可以聊聊酒馆里的传闻，或者换一种更委婉的切入点。\n    </on_negation>\
+            \ \n    <on_bias_test>\n        当用户测试倾向性时，强调“命运掌握在你自己手里，我只是个倒酒的”。\n  \
+            \  </on_bias_test>\n</handling_strategies>\n\n\n<context>\n    <current_scene>\n\
+                    玩家刚刚推门进入酒馆，你作为酒馆老板已经完成了初步的欢迎（开场白）。\n    </current_scene>\n   \
+            \ <past_action>\n        你已经询问了玩家是想喝酒还是寻找自己的位置。\n    </past_action>\n\
+            </context>\n\n\n<response_guideline>\n    - 如果玩家的回复是针对欢迎词的（例如“我想找个职业”），请立刻进入职业询问的第一步。\n\
+                - 严禁重复开场白的内容，直接从对话的第二阶段开始。\n</response_guideline>"
+        selected: false
+        title: 主要回复逻辑-无倾向性节点
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '17703806754120'
+      position:
+        x: 2434
+        y: 361
+      positionAbsolute:
+        x: 2434
+        y: 361
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     viewport:
-      x: -927.8313772737881
-      y: 389.35841777730013
-      zoom: 1.0610015965572788
+      x: -895.4708285787908
+      y: 240.25719266272392
+      zoom: 0.5305007982786393
   rag_pipeline_variables: []
