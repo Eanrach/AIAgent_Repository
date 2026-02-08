@@ -300,6 +300,17 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: question-classifier
+      id: 1770179022421-1770585640003-1770379526302-target
+      source: '1770179022421'
+      sourceHandle: '1770585640003'
+      target: '1770379526302'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         selected: false
@@ -310,10 +321,10 @@ workflow:
       id: '1770118607248'
       position:
         x: 0
-        y: 148
+        y: 264
       positionAbsolute:
         x: 0
-        y: 148
+        y: 264
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -402,10 +413,10 @@ workflow:
       id: llm
       position:
         x: 2474
-        y: 562
+        y: 475
       positionAbsolute:
         x: 2474
-        y: 562
+        y: 475
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -423,10 +434,10 @@ workflow:
       id: answer
       position:
         x: 2836
-        y: 395
+        y: 308
       positionAbsolute:
         x: 2836
-        y: 395
+        y: 308
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -459,10 +470,10 @@ workflow:
       id: '1770119206846'
       position:
         x: 2132
-        y: 561
+        y: 474
       positionAbsolute:
         x: 2132
-        y: 561
+        y: 474
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -509,10 +520,10 @@ workflow:
       id: '1770122768993'
       position:
         x: 1790
-        y: 562
+        y: 475
       positionAbsolute:
         x: 1790
-        y: 562
+        y: 475
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -521,14 +532,25 @@ workflow:
     - data:
         classes:
         - id: '1'
-          name: "沉浸式角色扮演 (IC - In Character)\n特征：\n - 顺着酒馆老板的话题进行回应。\n - 包含具体的角色行为（如：点酒、坐下、整理装备）。\n\
-            \ - 表达职业/种族意向（无论是模糊的迷茫，还是确定的选择，只要是在剧情语境下）。\n - 示例：“来一杯生啤”、“我想当个游侠”、“我是从北境来的”。"
+          name: "## 1. 沉浸式角色扮演 (IC - In Character)\n特征：\n- 顺着剧情回应：配合老板的提问，或进行酒馆场景下的动作。\n\
+            - **角色内咨询**：在剧情语境下，向老板请教关于武器、职业、世界的“常识”或“建议”。\n- 表达意向：即便在纠结，也是以“角色”的身份在纠结。\n\
+            - 示例：\n  - “来一杯生啤。” (动作)\n  - “双斧和双刀哪个用起来更顺手？” (向老板请教，而非问系统数值)\n  - “我还没想好，这外面的世界危险吗？”\
+            \ (剧情互动)"
         - id: '2'
-          name: "系统/数值咨询 (OOC - Out of Character)\n特征：\n - 用户跳出剧情语境，直接询问游戏机制、数值、攻略或直接下达系统指令。\n\
-            \ - 询问非剧情强相关的硬性数据。\n - 示例：如“战士的攻击力是多少？”、“哪个种族最强？”、“给我看职业列表”。"
+          name: "## 2. 系统/数值咨询 (OOC - Out of Character)\n特征：\n- **纯数值/底层逻辑查询**：询问具体的数值、百分比、掉率、攻略、等级限制等角色不可知的信息。\n\
+            - **元语言对话**：讨论游戏本身（如：这游戏有几个版本？怎么存档？）。\n- **指令性操作**：直接要求修改属性或切换系统界面。\n\
+            - 示例：\n  - “双斧的攻击速度加成是多少？” (明确询问数值)\n  - “哪个职业是当前版本的T0？” (元语言/攻略)\n  -\
+            \ “打开技能树。” (系统指令)"
+        - id: '1770585640003'
+          name: '## 分类3：逻辑确认 (Logic-Confirm) - **特征**：对老板提问的简单逻辑回应，如“是”、“不是”、“后者”、“对的”。'
         desc: 判断用户RP意愿及是否已有选择
         instruction: "# 分类任务\n 根据用户输入判断对话类型 \n# 背景\n 你是一个酒馆老板，正在引导新玩家进入角色扮演世界。\n\n\
-          {{#conversation.first_question#}}\n\n#用户输入\n{{#sys.query#}}"
+          # 核心判定逻辑 (优先级从高到低)\n\n1. **角色优先原则**：\n   如果用户的问题可以被“酒馆老板”以角色的身份、口语化地回答（例如：描述武器的手感、名声、威力感觉），哪怕涉及对比和选择，也必须归类为\
+          \ **IC**。\n\n2. **话术过滤原则**：\n   只有当用户表现出明显的“跳戏”，使用如“属性点”、“DPS”、“掉率”、“版本更新”、“后台设置”等纯系统词汇时，才归类为\
+          \ **OOC**。\n\n3. **模糊地带兜底**：\n   如果无法判断是 IC 还是 OOC，默认将其归类为 **IC**。因为在 RPG\
+          \ 环境下，保护沉浸感比准确分类更重要。\n\n# 判定优先级（最高准则）\n1. **去语境化优先**：只要用户只说了一个职业/种族的名词（如“战士”），无论之前聊得多么沉浸，一律判定为【分类2】。\n\
+          \n2. **零修饰原则**：如果用户虽然说了句子，但没有提供任何背景故事或性格表现（如“我想选法师”），一律判定为【分类2】。\n\n3. **只有当**：用户的回答中带有明显的“扮演痕迹”（如形容词、动作、语气词），才归为【分类1】。\n\
+          \n\n{{#conversation.first_question#}}\n\n#用户输入\n{{#sys.query#}}"
         instructions: ''
         memory:
           query_prompt_template: '{{#sys.query#}}
@@ -547,20 +569,20 @@ workflow:
         query_variable_selector:
         - sys
         - query
-        selected: false
+        selected: true
         title: 判断用户RP意愿
         type: question-classifier
         vision:
           enabled: false
-      height: 198
+      height: 236
       id: '1770179022421'
       position:
         x: 1066
-        y: 127
+        y: 228
       positionAbsolute:
         x: 1066
-        y: 127
-      selected: false
+        y: 228
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -576,10 +598,10 @@ workflow:
       id: '1770179245235'
       position:
         x: 1428
-        y: 87
+        y: 0
       positionAbsolute:
         x: 1428
-        y: 87
+        y: 0
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -632,7 +654,7 @@ workflow:
         query_variable_selector:
         - sys
         - query
-        selected: true
+        selected: false
         title: 判断是否在话题逻辑内对话
         type: question-classifier
         vision:
@@ -641,11 +663,11 @@ workflow:
       id: '1770379526302'
       position:
         x: 1428
-        y: 379
+        y: 292
       positionAbsolute:
         x: 1428
-        y: 379
-      selected: true
+        y: 292
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -697,10 +719,10 @@ workflow:
       id: '1770380223078'
       position:
         x: 1790
-        y: 392
+        y: 305
       positionAbsolute:
         x: 1790
-        y: 392
+        y: 305
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -733,10 +755,10 @@ workflow:
       id: '17703806152700'
       position:
         x: 2132
-        y: 391
+        y: 304
       positionAbsolute:
         x: 2132
-        y: 391
+        y: 304
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -797,10 +819,10 @@ workflow:
       id: '17703806754120'
       position:
         x: 2474
-        y: 392
+        y: 305
       positionAbsolute:
         x: 2474
-        y: 392
+        y: 305
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -826,10 +848,10 @@ workflow:
       id: '1770574037546'
       position:
         x: 342
-        y: 123
+        y: 239
       positionAbsolute:
         x: 342
-        y: 123
+        y: 239
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -860,10 +882,10 @@ workflow:
       id: '1770575052659'
       position:
         x: 704
-        y: 0
+        y: 116
       positionAbsolute:
         x: 704
-        y: 0
+        y: 116
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -892,10 +914,10 @@ workflow:
       id: '1770575683326'
       position:
         x: 704
-        y: 164
+        y: 280
       positionAbsolute:
         x: 704
-        y: 164
+        y: 280
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -918,10 +940,10 @@ workflow:
       id: '1770575919957'
       position:
         x: 704
-        y: 328
+        y: 444
       positionAbsolute:
         x: 704
-        y: 328
+        y: 444
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -944,17 +966,17 @@ workflow:
       id: '1770575925535'
       position:
         x: 704
-        y: 492
+        y: 608
       positionAbsolute:
         x: 704
-        y: 492
+        y: 608
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     viewport:
-      x: -122.58672435143922
-      y: 178.62450458982764
-      zoom: 0.8040888484979247
+      x: -10
+      y: 309
+      zoom: 0.7
   rag_pipeline_variables: []
