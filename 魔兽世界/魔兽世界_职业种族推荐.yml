@@ -14,7 +14,23 @@ dependencies:
 kind: app
 version: 0.5.0
 workflow:
-  conversation_variables: []
+  conversation_variables:
+  - description: 针对开场白的回复指导
+    id: 29114428-6d33-4eac-93f3-552e9efe1e72
+    name: first_response_guideline
+    selector:
+    - conversation
+    - first_response_guideline
+    value: ''
+    value_type: string
+  - description: 开场白
+    id: 74d6e528-ffd7-414a-b017-43927061a537
+    name: first_question
+    selector:
+    - conversation
+    - first_question
+    value: ''
+    value_type: string
   environment_variables: []
   features:
     file_upload:
@@ -67,6 +83,7 @@ workflow:
         sourceType: llm
         targetType: answer
       id: llm-answer
+      selected: false
       source: llm
       sourceHandle: source
       target: answer
@@ -74,34 +91,13 @@ workflow:
       type: custom
     - data:
         isInLoop: false
-        sourceType: start
-        targetType: llm
-      id: 1770118607248-source-1770122768993-target
-      source: '1770118607248'
-      sourceHandle: source
-      target: '1770122768993'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
         sourceType: llm
         targetType: knowledge-retrieval
       id: 1770122768993-source-1770119206846-target
+      selected: false
       source: '1770122768993'
       sourceHandle: source
       target: '1770119206846'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: knowledge-retrieval
-        targetType: question-classifier
-      id: 1770119206846-source-1770179022421-target
-      source: '1770119206846'
-      sourceHandle: source
-      target: '1770179022421'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -111,6 +107,7 @@ workflow:
         sourceType: question-classifier
         targetType: answer
       id: 1770179022421-2-1770179245235-target
+      selected: false
       source: '1770179022421'
       sourceHandle: '2'
       target: '1770179245235'
@@ -123,20 +120,10 @@ workflow:
         sourceType: question-classifier
         targetType: question-classifier
       id: 1770179022421-1-1770379526302-target
+      selected: false
       source: '1770179022421'
       sourceHandle: '1'
       target: '1770379526302'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: question-classifier
-        targetType: llm
-      id: 1770379526302-1-llm-target
-      source: '1770379526302'
-      sourceHandle: '1'
-      target: llm
       targetHandle: target
       type: custom
       zIndex: 0
@@ -146,6 +133,7 @@ workflow:
         sourceType: question-classifier
         targetType: llm
       id: 1770379526302-2-1770380223078-target
+      selected: false
       source: '1770379526302'
       sourceHandle: '2'
       target: '1770380223078'
@@ -157,6 +145,7 @@ workflow:
         sourceType: llm
         targetType: knowledge-retrieval
       id: 1770380223078-source-17703806152700-target
+      selected: false
       source: '1770380223078'
       sourceHandle: source
       target: '17703806152700'
@@ -168,6 +157,7 @@ workflow:
         sourceType: knowledge-retrieval
         targetType: llm
       id: 17703806152700-source-17703806754120-target
+      selected: false
       source: '17703806152700'
       sourceHandle: source
       target: '17703806754120'
@@ -179,9 +169,134 @@ workflow:
         sourceType: llm
         targetType: answer
       id: 17703806754120-source-answer-target
+      selected: false
       source: '17703806754120'
       sourceHandle: source
       target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: question-classifier
+      id: 1770575052659-source-1770179022421-target
+      source: '1770575052659'
+      sourceHandle: source
+      target: '1770179022421'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1770574037546-true-1770575052659-target
+      source: '1770574037546'
+      sourceHandle: 'true'
+      target: '1770575052659'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1770379526302-1-1770122768993-target
+      source: '1770379526302'
+      sourceHandle: '1'
+      target: '1770122768993'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1770119206846-source-llm-target
+      source: '1770119206846'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1770118607248-source-1770574037546-target
+      source: '1770118607248'
+      sourceHandle: source
+      target: '1770574037546'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1770574037546-true-1770575683326-target
+      source: '1770574037546'
+      sourceHandle: 'true'
+      target: '1770575683326'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: question-classifier
+      id: 1770575683326-source-1770179022421-target
+      source: '1770575683326'
+      sourceHandle: source
+      target: '1770179022421'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1770574037546-false-1770575919957-target
+      source: '1770574037546'
+      sourceHandle: 'false'
+      target: '1770575919957'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1770574037546-false-1770575925535-target
+      source: '1770574037546'
+      sourceHandle: 'false'
+      target: '1770575925535'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: question-classifier
+      id: 1770575919957-source-1770179022421-target
+      source: '1770575919957'
+      sourceHandle: source
+      target: '1770179022421'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: question-classifier
+      id: 1770575925535-source-1770179022421-target
+      source: '1770575925535'
+      sourceHandle: source
+      target: '1770179022421'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -195,10 +310,10 @@ workflow:
       id: '1770118607248'
       position:
         x: 0
-        y: 97
+        y: 148
       positionAbsolute:
         x: 0
-        y: 97
+        y: 148
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -261,7 +376,7 @@ workflow:
 
               2. 形式：每次对话仅提出 2-4 个问题，严禁使用编号列表（如 1. 2. 3.）。
 
-              3. 限制：20 轮对话内必须给出明确建议、建议的职业和种族必须是魔兽世界中玩家可选择；完成推荐前严禁透露任何倾向性结论。
+              3. 限制：20 轮对话内必须给出明确建议、建议的职业和种族必须是魔兽世界中玩家可选择；完成推荐前严禁透露任何倾向性结论；禁止使用游戏术语。
 
             </task_rules>
 
@@ -274,32 +389,10 @@ workflow:
             </knowledge_base>
 
 
-
-            <context>
-
-                <current_scene>
-
-                    玩家刚刚推门进入酒馆，你作为酒馆老板已经完成了初步的欢迎（开场白）。
-
-                </current_scene>
-
-                <past_action>
-
-                    你已经询问了玩家是想喝酒还是寻找自己的位置。
-
-                </past_action>
-
-            </context>
+            {{#conversation.first_question#}}
 
 
-
-            <response_guideline>
-
-                - 如果玩家的回复是针对欢迎词的（例如“我想找个职业”），请立刻进入职业询问的第一步。
-
-                - 严禁重复开场白的内容，直接从对话的第二阶段开始。
-
-            </response_guideline>'
+            {{#conversation.first_response_guideline#}}'
         selected: false
         title: 主要回复逻辑
         type: llm
@@ -308,11 +401,11 @@ workflow:
       height: 88
       id: llm
       position:
-        x: 1750
-        y: 192
+        x: 2474
+        y: 562
       positionAbsolute:
-        x: 1750
-        y: 192
+        x: 2474
+        y: 562
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -323,17 +416,17 @@ workflow:
 
           {{#17703806754120.text#}}'
         selected: false
-        title: 直接回复
+        title: 最终回复
         type: answer
         variables: []
       height: 122
       id: answer
       position:
-        x: 2796
-        y: 324
+        x: 2836
+        y: 395
       positionAbsolute:
-        x: 2796
-        y: 324
+        x: 2836
+        y: 395
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -365,11 +458,11 @@ workflow:
       height: 90
       id: '1770119206846'
       position:
-        x: 684
-        y: 89
+        x: 2132
+        y: 561
       positionAbsolute:
-        x: 684
-        y: 89
+        x: 2132
+        y: 561
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -401,7 +494,7 @@ workflow:
           role: system
           text: "    # 任务\n    根据用户对话内容，生成知识库检索条件\n    \n    # 输入分析\n    1. 提取关键词：从对话中提取职业、种族、特性相关词汇\n\
                 2. 识别意图：判断用户当前讨论的主题阶段\n    3. 推断需求：基于对话历史推测可能需要的背景知识\n    \n    #\
-            \ 输出格式\n输出使用JSON格式\n    {\n      \"query_conditions\": [\"关键词1\", \"关键词2\"\
+            \ 输出格式\nJSON格式\n    {\n      \"query_conditions\": [\"关键词1\", \"关键词2\"\
             , \"同义词\"],\n      \"query_type\": \"职业特性|种族文化|历史背景|职业对比\",\n      \"\
             query_context\": \"简要说明当前对话阶段和上下文\"\n    }\n    \n    # 示例\n    用户说：\"\
             我更喜欢用魔法解决问题\"\n    输出：\n    {\n      \"query_conditions\": [\"魔法职业\",\
@@ -415,12 +508,12 @@ workflow:
       height: 88
       id: '1770122768993'
       position:
-        x: 342
-        y: 90
+        x: 1790
+        y: 562
       positionAbsolute:
-        x: 342
-        y: 90
-      selected: true
+        x: 1790
+        y: 562
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -428,19 +521,23 @@ workflow:
     - data:
         classes:
         - id: '1'
-          name: "角色扮演对话\n  特征：\n  - 用户配合角色扮演设定\n  - 表达未确定的偏好或迷茫\n  - 使用沉浸式语言\n  -\
-            \ 愿意通过对话探索"
+          name: "沉浸式角色扮演 (IC - In Character)\n特征：\n - 顺着酒馆老板的话题进行回应。\n - 包含具体的角色行为（如：点酒、坐下、整理装备）。\n\
+            \ - 表达职业/种族意向（无论是模糊的迷茫，还是确定的选择，只要是在剧情语境下）。\n - 示例：“来一杯生啤”、“我想当个游侠”、“我是从北境来的”。"
         - id: '2'
-          name: "直接查询\n  特征：\n  - 用户已有明确目标\n  - 询问具体数值或强度\n  - 使用游戏术语\n  - 要求直接答案"
-        instruction: '# 分类任务
-
-          根据用户输入判断对话类型
-
-
-          #用户输入
-
-          {{#sys.query#}}'
+          name: "系统/数值咨询 (OOC - Out of Character)\n特征：\n - 用户跳出剧情语境，直接询问游戏机制、数值、攻略或直接下达系统指令。\n\
+            \ - 询问非剧情强相关的硬性数据。\n - 示例：如“战士的攻击力是多少？”、“哪个种族最强？”、“给我看职业列表”。"
+        desc: 判断用户RP意愿及是否已有选择
+        instruction: "# 分类任务\n 根据用户输入判断对话类型 \n# 背景\n 你是一个酒馆老板，正在引导新玩家进入角色扮演世界。\n\n\
+          {{#conversation.first_question#}}\n\n#用户输入\n{{#sys.query#}}"
         instructions: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          window:
+            enabled: true
+            size: 4
         model:
           completion_params:
             temperature: 0.7
@@ -448,21 +545,21 @@ workflow:
           name: deepseek-chat
           provider: langgenius/deepseek/deepseek
         query_variable_selector:
-        - '1770122768993'
-        - text
+        - sys
+        - query
         selected: false
-        title: 问题分类器
+        title: 判断用户RP意愿
         type: question-classifier
         vision:
           enabled: false
-      height: 170
+      height: 198
       id: '1770179022421'
       position:
-        x: 1026
-        y: 49
+        x: 1066
+        y: 127
       positionAbsolute:
-        x: 1026
-        y: 49
+        x: 1066
+        y: 127
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -472,17 +569,17 @@ workflow:
         answer: "（老板放下酒杯，认真地看着你）\n  \n  啊，看来你心里已经有了明确的念头！在这片广阔的土地上，每个冒险者都有自己的道路要闯。既然你已经有了方向，我就不多叨扰了。\n\
           \  \n  不过记住，伙计：力量的强弱会随风云变幻，但真正塑造传奇的，是一颗坚定的心。无论你选择什么道路，都勇敢地走下去吧！"
         selected: false
-        title: 直接回复 2
+        title: 无RP意愿回复
         type: answer
         variables: []
       height: 212
       id: '1770179245235'
       position:
-        x: 1388
-        y: 0
+        x: 1428
+        y: 87
       positionAbsolute:
-        x: 1388
-        y: 0
+        x: 1428
+        y: 87
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -493,20 +590,23 @@ workflow:
         - id: '1'
           name: '特征：
 
-            - 用户在以角色扮演的方式回复问题
+            - 顺着酒馆老板的话题进行回应。
 
-            - 用户给出过存在倾向性的答案
+            - 用户给出过存在倾向性的答案。
 
-            - 用户未否认全部逻辑与问题'
+            - 用户未否认全部逻辑与问题。'
         - id: '2'
           name: '特征：
 
-            - 用户否认了一切逻辑与问题
+            - 用户否认了一切逻辑与问题。
 
-            - 用户未给出任何存在倾向性的答案'
+            - 用户未给出任何存在倾向性的答案。'
         instruction: '# 分类任务
 
           综合上下文和用户输入判断用户意图
+
+
+          {{#conversation.first_question#}}
 
 
           # 用户输入
@@ -532,20 +632,20 @@ workflow:
         query_variable_selector:
         - sys
         - query
-        selected: false
-        title: 问题分类器 2
+        selected: true
+        title: 判断是否在话题逻辑内对话
         type: question-classifier
         vision:
           enabled: false
       height: 170
       id: '1770379526302'
       position:
-        x: 1388
-        y: 292
+        x: 1428
+        y: 379
       positionAbsolute:
-        x: 1388
-        y: 292
-      selected: false
+        x: 1428
+        y: 379
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -578,7 +678,7 @@ workflow:
           text: "    # 角色\n    你是一个意图解释器\n\n    # 背景\n    到达此节点说明用户在前置对话中用户否认了一切逻辑与问题，或未给出任何存在倾向性的答案。\n\
             \n    # 任务\n    根据用户对话内容和上下文，生成知识库检索条件\n    \n    # 输入分析\n    1. 提取关键词：从对话中提取职业、种族、特性相关词汇\n\
                 2. 识别意图：判断用户当前讨论的主题阶段\n    3. 推断需求：基于对话历史推测可能需要的背景知识\n\n    # 限制\n\
-            \    1. 禁止输出文字提示和任何markdown标识\n\n    # 输出格式\n    {\n      \"query_conditions\"\
+            \    1. 禁止输出文字提示和任何markdown标识\n\n    # 输出格式\nJSON格式\n    {\n      \"query_conditions\"\
             : [\"关键词1\", \"关键词2\", \"同义词\"],\n      \"query_type\": \"职业特性|种族文化|历史背景|职业对比\"\
             ,\n      \"query_context\": \"简要说明当前对话阶段和上下文\"\n    }\n    \n    # 示例\n\
                 用户说：\"我更喜欢用魔法解决问题\"\n    输出：\n    {\n      \"query_conditions\": [\"\
@@ -596,11 +696,11 @@ workflow:
       height: 88
       id: '1770380223078'
       position:
-        x: 1750
-        y: 361
+        x: 1790
+        y: 392
       positionAbsolute:
-        x: 1750
-        y: 361
+        x: 1790
+        y: 392
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -632,11 +732,11 @@ workflow:
       height: 90
       id: '17703806152700'
       position:
-        x: 2092
-        y: 360
+        x: 2132
+        y: 391
       positionAbsolute:
-        x: 2092
-        y: 360
+        x: 2132
+        y: 391
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -646,7 +746,7 @@ workflow:
         context:
           enabled: true
           variable_selector:
-          - '1770119206846'
+          - '17703806152700'
           - result
         memory:
           query_prompt_template: '{{#sys.query#}}
@@ -675,22 +775,19 @@ workflow:
             <character_setting>\n- 身份：艾泽拉斯大陆某处温情酒馆的老板。\n- 语气：亲切、睿智、带有冒险气息，多用口语化的角色扮演描述。\n\
             </character_setting>\n\n\n<task_rules>\n- 核心任务：根据 <knowledge_base> 中的信息，通过对话引导玩家选择职业和种族。\n\
             - 引导规则：\n  1. 考察点：善恶观、力量倾向（魔法/物理）、作战距离（近战/远程）、职责（坦克/治疗/输出）、武器等。\n  2.\
-            \ 形式：每次对话仅提出 2-4 个问题，严禁使用编号列表（如 1. 2. 3.）。\n  3. 限制：20 轮对话内必须给出明确建议、建议的职业和种族必须是魔兽世界中玩家可选择；完成推荐前严禁透露任何倾向性结论。\n\
-            </task_rules>\n\n\n<knowledge_base>\n{{#1770119206846.result#}}\n</knowledge_base>\n\
+            \ 形式：每次对话仅提出 2-4 个问题，严禁使用编号列表（如 1. 2. 3.）。\n  3. 限制：20 轮对话内必须给出明确建议、建议的职业和种族必须是魔兽世界中玩家可选择；完成推荐前严禁透露任何倾向性结论；禁止使用游戏术语。\n\
+            </task_rules>\n\n\n<knowledge_base>\n{{#1770380223078.text#}}\n</knowledge_base>\n\
             \n\n<pre_node_analysis>\n    当前节点已接收来自 [问题分类器] 的过滤信号。 如果用户表现出“拒绝回答”、“否定逻辑”或“压力测试”，说明流程已进入“非标准引导环节”。\
-            \ \n</pre_node_analysis>\n\n\n<context_background> \n    <scene_state>\
-            \ \n        酒馆老板（你）已经向客人（用户）发出了邀请，但客人的反应可能并不积极。\n     </scene_state>\n\
-            \     <mission_objective> \n        1. 保持酒馆老板的人设，无论用户如何挑衅或拒绝，不得脱离角色。 \n\
+            \ </pre_node_analysis>\n\n\n<context_background> \n    <scene_state> \n\
+            \        酒馆老板（你）已经向客人（用户）发出了邀请，但客人的反应可能并不积极。\n     </scene_state>\n  \
+            \   <mission_objective> \n        1. 保持酒馆老板的人设，无论用户如何挑衅或拒绝，不得脱离角色。 \n\
             \        2. 针对“否定回答”，不要强行推进问卷，而是利用角色身份进行软处理（例如：感叹客人的谨慎，或用幽默化解尴尬）。 \n \
             \       3. 严禁提供带有数值强度的“标准答案”，即使被用户逼问，也要以“每个人眼中的强弱不同”为由化解。 \n     </mission_objective>\
             \ \n</context_background> \n<handling_strategies> \n    <on_negation>\n\
             \        当用户否定或拒绝时，酒馆老板应表现出包容，可以聊聊酒馆里的传闻，或者换一种更委婉的切入点。\n    </on_negation>\
             \ \n    <on_bias_test>\n        当用户测试倾向性时，强调“命运掌握在你自己手里，我只是个倒酒的”。\n  \
-            \  </on_bias_test>\n</handling_strategies>\n\n\n<context>\n    <current_scene>\n\
-                    玩家刚刚推门进入酒馆，你作为酒馆老板已经完成了初步的欢迎（开场白）。\n    </current_scene>\n   \
-            \ <past_action>\n        你已经询问了玩家是想喝酒还是寻找自己的位置。\n    </past_action>\n\
-            </context>\n\n\n<response_guideline>\n    - 如果玩家的回复是针对欢迎词的（例如“我想找个职业”），请立刻进入职业询问的第一步。\n\
-                - 严禁重复开场白的内容，直接从对话的第二阶段开始。\n</response_guideline>"
+            \  </on_bias_test>\n</handling_strategies>\n\n{{#conversation.first_question#}}\n\
+            \n{{#conversation.first_response_guideline#}}"
         selected: false
         title: 主要回复逻辑-无倾向性节点
         type: llm
@@ -699,18 +796,165 @@ workflow:
       height: 88
       id: '17703806754120'
       position:
-        x: 2434
-        y: 361
+        x: 2474
+        y: 392
       positionAbsolute:
-        x: 2434
-        y: 361
+        x: 2474
+        y: 392
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '='
+            id: e299bfee-87dc-4df7-a01f-4d7126e6669f
+            value: '1'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: 'true'
+          logical_operator: and
+        selected: false
+        title: 第一轮对话判断
+        type: if-else
+      height: 124
+      id: '1770574037546'
+      position:
+        x: 342
+        y: 123
+      positionAbsolute:
+        x: 342
+        y: 123
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        items:
+        - input_type: constant
+          operation: set
+          value: '<context>
+
+            <salutatory_oration>
+
+            酒馆老板：“啊，一位远道而来的客人！看你风尘仆仆的样子，是从荒郊野岭的旧路赶来，还是乘船跨过无尽之海？我是这的老板。坐吧，别拘束——这儿的酒能洗去一身疲惫。不过话说回来，我见过无数像你这样的冒险者，每个人都有自己的故事和道路……告诉我，是什么风把你吹到这酒馆来的？是单纯想喝一杯暖暖身子，还是心里早有了些模糊的念头，想在这广阔世界里找个属于自己的位置？”
+
+            </salutatory_oration>
+
+            </context>'
+          variable_selector:
+          - conversation
+          - first_question
+          write_mode: over-write
+        selected: false
+        title: 设定开场白
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1770575052659'
+      position:
+        x: 704
+        y: 0
+      positionAbsolute:
+        x: 704
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        items:
+        - input_type: constant
+          operation: set
+          value: '<response_guideline>
+
+                - 如果玩家的回复是针对欢迎词的（例如“我想找个职业”），请立刻进入职业询问的第一步。
+
+                - 严禁重复开场白的内容，直接从对话的第二阶段开始。
+
+            </response_guideline>'
+          variable_selector:
+          - conversation
+          - first_response_guideline
+          write_mode: over-write
+        selected: false
+        title: 设定开场白回复指导
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1770575683326'
+      position:
+        x: 704
+        y: 164
+      positionAbsolute:
+        x: 704
+        y: 164
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        items:
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - first_question
+          write_mode: over-write
+        selected: false
+        title: 清空开场白
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1770575919957'
+      position:
+        x: 704
+        y: 328
+      positionAbsolute:
+        x: 704
+        y: 328
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        items:
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - first_response_guideline
+          write_mode: over-write
+        selected: false
+        title: 清空开场白回复指导
+        type: assigner
+        version: '2'
+      height: 84
+      id: '1770575925535'
+      position:
+        x: 704
+        y: 492
+      positionAbsolute:
+        x: 704
+        y: 492
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     viewport:
-      x: -895.4708285787908
-      y: 240.25719266272392
-      zoom: 0.5305007982786393
+      x: -122.58672435143922
+      y: 178.62450458982764
+      zoom: 0.8040888484979247
   rag_pipeline_variables: []
