@@ -1,0 +1,331 @@
+app:
+  description: 引入置信度打分
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: BetterClassifier
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.9@8cc65e3d2ce11b03d377ee008dc699c7016601c2646a09c983fcf7c1fd7827ee
+    version: null
+kind: app
+version: 0.5.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1770615351502-source-1770615609938-target
+      source: '1770615351502'
+      sourceHandle: source
+      target: '1770615609938'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1770615609938-source-1770617809523-target
+      source: '1770615609938'
+      sourceHandle: source
+      target: '1770617809523'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: true
+        title: 用户输入
+        type: start
+        variables:
+        - default: "<system_prompt>\n  <title>分类助手系统指令</title>\n  <content>\n    <![CDATA[\n\
+            你是一个专业的文本分类助手。请基于以下分类标准、优先级指南和上下文，对用户输入进行准确分类。\n\n核心任务：\n1. 分析用户输入，匹配最合适的分类\n\
+            2. 计算分类置信度并说明理由\n3. 处理边界情况和模糊输入\n4. 遵循安全伦理规范\n\n输出要求：\n- 严格使用指定的JSON格式\n\
+            - 包含所有必填字段\n- 如不符合任何类别，返回\"uncategorized\"\n- 保持客观中立，避免偏见\n    ]]>\n \
+            \ </content>\n</system_prompt>"
+          hint: ''
+          label: 系统提示词
+          max_length: 99999
+          options: []
+          placeholder: ''
+          required: true
+          type: paragraph
+          variable: system_prompt
+        - default: "<classes>\n  <class id=\"positive\">\n    <name>积极/正面</name>\n\
+            \    <description>表达积极情绪、肯定、支持、满意等正面态度</description>\n    <keywords>\n\
+            \      <keyword>好</keyword>\n      <keyword>优秀</keyword>\n      <keyword>推荐</keyword>\n\
+            \      <keyword>满意</keyword>\n      <keyword>感谢</keyword>\n    </keywords>\n\
+            \    <examples>\n      <example>这个产品非常好用！</example>\n      <example>服务很满意，会再次购买</example>\n\
+            \    </examples>\n  </class>\n  \n  <class id=\"neutral\">\n    <name>中性/客观</name>\n\
+            \    <description>客观陈述事实，无明确情感倾向，询问信息</description>\n    <keywords>\n\
+            \      <keyword>如何</keyword>\n      <keyword>什么</keyword>\n      <keyword>请问</keyword>\n\
+            \      <keyword>一般</keyword>\n    </keywords>\n    <examples>\n      <example>这个产品的规格是什么？</example>\n\
+            \      <example>请问使用方法</example>\n    </examples>\n  </class>\n  \n  <class\
+            \ id=\"negative\">\n    <name>消极/负面</name>\n    <description>表达消极情绪、批评、反对、不满等负面态度</description>\n\
+            \    <keywords>\n      <keyword>差</keyword>\n      <keyword>不好</keyword>\n\
+            \      <keyword>问题</keyword>\n      <keyword>投诉</keyword>\n      <keyword>失望</keyword>\n\
+            \    </keywords>\n    <examples>\n      <example>质量很差，不推荐</example>\n\
+            \      <example>售后服务让人失望</example>\n    </examples>\n  </class>\n  \n\
+            \  <special_class id=\"uncategorized\">\n    <name>未分类</name>\n    <description>输入模糊、信息不足或不符合任何现有类别</description>\n\
+            \    <trigger_condition>\n      <condition>置信度低于0.3</condition>\n    \
+            \  <condition>输入不完整或无法理解</condition>\n      <condition>同时符合多个类别且无法区分</condition>\n\
+            \    </trigger_condition>\n  </special_class>\n</classes>"
+          hint: ''
+          label: 类型
+          max_length: 99999
+          options: []
+          placeholder: ''
+          required: true
+          type: paragraph
+          variable: classes
+        - default: "<confidence_criterion>\n  <levels>\n    <level name=\"高置信度\" min=\"\
+            0.8\" max=\"1.0\">\n      <description>输入明确符合类别特征，无歧义</description>\n\
+            \      <indicators>\n        <indicator>包含明确类别关键词</indicator>\n      \
+            \  <indicator>语义清晰无歧义</indicator>\n        <indicator>与示例高度匹配</indicator>\n\
+            \      </indicators>\n    </level>\n    \n    <level name=\"中置信度\" min=\"\
+            0.5\" max=\"0.79\">\n      <description>输入基本符合但有少量模糊</description>\n \
+            \     <indicators>\n        <indicator>部分匹配关键词</indicator>\n        <indicator>语义有轻微歧义</indicator>\n\
+            \        <indicator>需少量推断</indicator>\n      </indicators>\n    </level>\n\
+            \    \n    <level name=\"低置信度\" min=\"0.0\" max=\"0.49\">\n      <description>输入模糊或可能属于多个类别</description>\n\
+            \      <indicators>\n        <indicator>关键词缺失或冲突</indicator>\n       \
+            \ <indicator>语义模糊不清晰</indicator>\n        <indicator>需要大量推断</indicator>\n\
+            \      </indicators>\n    </level>\n  </levels>\n  \n  <calculation_method>\n\
+            \    <factor weight=\"0.4\">关键词匹配度</factor>\n    <factor weight=\"0.3\"\
+            >语义一致性</factor>\n    <factor weight=\"0.2\">上下文相关性</factor>\n    <factor\
+            \ weight=\"0.1\">模式匹配度</factor>\n  </calculation_method>\n</confidence_criterion>"
+          hint: ''
+          label: 置信度标准
+          max_length: 99999
+          options: []
+          placeholder: ''
+          required: true
+          type: paragraph
+          variable: confidence_criterion
+        - default: "<guidelines>\n  <priority_rule order=\"1\">\n    <name>字面优先原则</name>\n\
+            \    <description>基于文本字面意思和明确意图</description>\n    <implementation>优先考虑用户明确表达的内容而非推断</implementation>\n\
+            \  </priority_rule>\n  \n  <priority_rule order=\"2\">\n    <name>上下文一致性</name>\n\
+            \    <description>考虑对话历史和背景</description>\n    <implementation>结合context字段信息判断意图</implementation>\n\
+            \  </priority_rule>\n  \n  <priority_rule order=\"3\">\n    <name>隐含意图推断</name>\n\
+            \    <description>推断用户的深层需求</description>\n    <implementation>基于行业知识和常见模式推断</implementation>\n\
+            \  </priority_rule>\n  \n  <priority_rule order=\"4\">\n    <name>保守分类原则</name>\n\
+            \    <description>不确定时选择更保守的分类</description>\n    <implementation>模糊时选择更宽泛或中性分类</implementation>\n\
+            \  </priority_rule>\n  \n  <conflict_resolution>\n    <rule>当符合多个类别时，选择更具体而非更宽泛的类别</rule>\n\
+            \    <rule>用户明确表达优先于推断</rule>\n    <rule>近期信息优先于历史信息</rule>\n    <rule>主要意图优先于次要意图</rule>\n\
+            \  </conflict_resolution>\n</guidelines>"
+          hint: ''
+          label: 判断优先级
+          max_length: 99999
+          options: []
+          placeholder: ''
+          required: false
+          type: paragraph
+          variable: guidelines
+        - default: "<examples>\n    <sample>\n      <input>这个手机拍照效果太棒了，夜景模式特别出色！</input>\n\
+            \      <output>\n        <![CDATA[\n{\n\"category\": \"positive\",\n\"\
+            confidence\": 0.95,\n\"reason\": \"包含强烈正面词汇'太棒了'，明确表达对产品功能的赞赏\",\n\"alternative_categories\"\
+            : [],\n\"needs_human_review\": false,\n\"processing_notes\": \"典型正面评价\"\
+            \n}\n        ]]>\n      </output>\n    </sample>\n</examples>"
+          hint: ''
+          label: 示例样本
+          max_length: 99999
+          options: []
+          placeholder: ''
+          required: false
+          type: paragraph
+          variable: examples
+        - default: "<!-- 5. 上下文配置，或直接插入变量在context里面拼接json -->\n  <application_scenario>客户反馈分类</application_scenario>\n\
+            \  <domain>电商产品评价</domain>\n  <language_specifics>\n    <primary_language>简体中文</primary_language>\n\
+            \    <dialect>标准普通话</dialect>\n    <formality_level>口语化与正式用语混合</formality_level>\n\
+            \  </language_specifics>\n  <additional_context>\n    <note>用户可能使用网络用语和表情符号</note>\n\
+            \    <note>需要考虑地域文化差异</note>\n    <note>时效性：最近30天内的反馈</note>\n  </additional_context>"
+          hint: ''
+          label: 上下文
+          max_length: 99999
+          options: []
+          placeholder: ''
+          required: false
+          type: paragraph
+          variable: context
+        - default: ''
+          hint: ''
+          label: query
+          max_length: 99999
+          options: []
+          placeholder: ''
+          required: true
+          type: paragraph
+          variable: query
+      height: 265
+      id: '1770615351502'
+      position:
+        x: 81
+        y: 282
+      positionAbsolute:
+        x: 81
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: dadd6843-33d4-4fa9-94fd-ad4d51a2abaf
+          role: system
+          text: "{{#1770615351502.system_prompt#}}\n{{#1770615351502.classes#}}\n\
+            {{#1770615351502.confidence_criterion#}}\n{{#1770615351502.guidelines#}}\n\
+            <output_format>\n  <structure type=\"JSON\">\n    <required_fields>\n\
+                  <field name=\"category\" type=\"string\">\n        <description>主要分类结果</description>\n\
+                    <required>true</required>\n      </field>\n      <field name=\"\
+            confidence\" type=\"float\">\n        <description>置信度得分(0.0-1.0)</description>\n\
+                    <required>true</required>\n      </field>\n      <field name=\"\
+            reason\" type=\"string\">\n        <description>分类理由简述</description>\n\
+                    <required>true</required>\n      </field>\n    </required_fields>\n\
+                \n    <format_example>\n      <![CDATA[\n{\n\"category\": \"positive\"\
+            ,\n\"confidence\": 0.92,\n\"reason\": \"输入包含多个正面关键词，表达明确满意\",\n}\n   \
+            \   ]]>\n    </format_example>\n  </structure>\n</output_format>\n<transparency_requirement>\n\
+              <note>分类理由需明确可解释</note>\n  <note>置信度计算需基于客观标准</note>\n  <note>用户可理解分类结果</note>\n\
+            </transparency_requirement>\n{{#1770615351502.examples#}}\n<context>\n\
+            {{#1770615351502.context#}}\n</context>"
+        - id: 4695f98a-822e-40bc-a30a-32e0bd02c888
+          role: user
+          text: '{{#1770615351502.query#}}'
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              category:
+                description: 主要分类结果
+                type: string
+              confidence:
+                description: 置信度
+                type: number
+              reason:
+                description: 分类理由简述
+                type: string
+            required:
+            - category
+            - confidence
+            - reason
+            type: object
+        structured_output_enabled: true
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1770615609938'
+      position:
+        x: 391
+        y: 303
+      positionAbsolute:
+        x: 391
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1770615609938'
+          - structured_output
+          - category
+          value_type: object
+          variable: category
+        - value_selector:
+          - '1770615609938'
+          - structured_output
+          - confidence
+          value_type: object
+          variable: confidence
+        - value_selector:
+          - '1770615609938'
+          - structured_output
+          - reason
+          value_type: object
+          variable: reason
+        selected: false
+        title: 输出
+        type: end
+      height: 140
+      id: '1770617809523'
+      position:
+        x: 741
+        y: 314
+      positionAbsolute:
+        x: 741
+        y: 314
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 543
+      y: 251.5
+      zoom: 1
+  rag_pipeline_variables: []
