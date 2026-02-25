@@ -1,0 +1,1790 @@
+app:
+  description: '本工作流旨在解决大模型上下文窗口限制导致的记忆丢失问题，通过将每轮对话（用户问题和助手回答）存入向量数据库，并在后续对话中动态检索相关历史记录，实现长期记忆能力。
+
+
+    核心流程：
+
+
+    记忆写入：每轮对话结束后，将本轮问答内容自动更新到指定的知识库中，形成持久化记忆。
+
+
+    记忆读取：新对话开始时，首先判断是否为第一轮（无历史记忆），若不是则提取用户问题的关键词进行语义扩展，然后从知识库中检索与最近10轮对话及当前问题最相关的内容，作为上下文辅助模型生成回答。
+
+
+    文件处理：支持上传文件并自动存入知识库，丰富记忆来源。
+
+
+    记忆窗口：通过配置LLM节点的记忆窗口（默认为50轮），确保模型能利用近期对话信息，同时结合向量检索扩展长期记忆。'
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 对话记忆持久化模板
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.9@8cc65e3d2ce11b03d377ee008dc699c7016601c2646a09c983fcf7c1fd7827ee
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.43@18a2f3c3559d752b178bb4efd6b736dec8dd13c2d963fd6aa5b0a350e24e6826
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: r3-yamauchi/knowledgebase_update:0.0.1@cd115deb1817e8d89d605cfb1a1d3fd4f96c0f4fb767cddb7948ab4ea0a0e35d
+    version: null
+kind: app
+version: 0.5.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1771965781004-true-llm-target
+      selected: false
+      source: '1771965781004'
+      sourceHandle: 'true'
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1771965781004-false-1771965837737-target
+      selected: false
+      source: '1771965781004'
+      sourceHandle: 'false'
+      target: '1771965837737'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1771965837737-source-1771965816632-target
+      selected: false
+      source: '1771965837737'
+      sourceHandle: source
+      target: '1771965816632'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1771965816632-source-llm-target
+      selected: false
+      source: '1771965816632'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: llm-source-1771971947820-target
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: '1771971947820'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: tool
+      id: 1771971947820-source-1771968611938-target
+      selected: false
+      source: '1771971947820'
+      sourceHandle: source
+      target: '1771968611938'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1771965755981-source-1771975195871-target
+      source: '1771965755981'
+      sourceHandle: source
+      target: '1771975195871'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1771975195871-false-1771965781004-target
+      source: '1771975195871'
+      sourceHandle: 'false'
+      target: '1771965781004'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: tool
+      id: 17719753982140-source-17719753982141-target
+      selected: false
+      source: '17719753982140'
+      sourceHandle: source
+      target: '17719753982141'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1771975195871-true-17719753982140-target
+      source: '1771975195871'
+      sourceHandle: 'true'
+      target: '17719753982140'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1771975195871-true-1771965781004-target
+      source: '1771975195871'
+      sourceHandle: 'true'
+      target: '1771965781004'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: 系统提示词
+          max_length: 99999
+          options: []
+          placeholder: ''
+          required: false
+          type: paragraph
+          variable: system_prompt
+      height: 109
+      id: '1771965755981'
+      position:
+        x: 0
+        y: 19
+      positionAbsolute:
+        x: 0
+        y: 19
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1771965816632'
+          - result
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 34cd18ee-ad76-4114-be9a-75e0444766ba
+          role: system
+          text: '{{#1771965755981.system_prompt#}}'
+        selected: false
+        title: 应答节点
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: llm
+      position:
+        x: 1770
+        y: 40
+      positionAbsolute:
+        x: 1770
+        y: 40
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm.text#}}'
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 2112.308028200051
+        y: -25.665938899889873
+      positionAbsolute:
+        x: 2112.308028200051
+        y: -25.665938899889873
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '='
+            id: a1cc4e03-bf63-455c-bf92-3addd2bbe4c5
+            value: '1'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: 'true'
+          logical_operator: and
+        selected: false
+        title: 判断是否为会话第一轮
+        type: if-else
+      height: 124
+      id: '1771965781004'
+      position:
+        x: 704
+        y: 0
+      positionAbsolute:
+        x: 704
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - /hwAHpGF2YBV8E1bIOy5RmHl3yCHNmeAfzahasnBYwGUI9Smh8GK4tm8c8k9Sdls
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: netease-youdao/bce-reranker-base_v1
+            provider: langgenius/siliconflow/siliconflow
+          top_k: 4
+        query_variable_selector:
+        - '1771965837737'
+        - text
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 90
+      id: '1771965816632'
+      position:
+        x: 1408
+        y: 54
+      positionAbsolute:
+        x: 1408
+        y: 54
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 5bea5f76-7c1f-4db8-8cc9-4693612682cd
+          role: system
+          text: '<Prompt>
+
+                <Role>关键词提取与语义扩展助手</Role>
+
+                <Task>根据用户输入的文本，提取核心关键词并补充语义相关的关键词，用于向量数据库检索前置处理。</Task>
+
+                <Input>用户查询或文本（纯文本）。</Input>
+
+                <Output>一个JSON数组，包含字符串形式的关键词列表，例如：["关键词1", "关键词2", ...]。</Output>
+
+                <Instructions>
+
+                    <Step>1. 分析输入文本的语义，识别主要实体、概念、动作、修饰语及隐含意图。</Step>
+
+                    <Step>2. 提取文本中直接出现的重要术语作为基础关键词。</Step>
+
+                    <Step>3. 基于基础关键词，通过语义理解补充同义词、近义词、上下位词、相关概念或常见搭配，以增强检索覆盖面。</Step>
+
+                    <Step>4. 确保关键词覆盖文本的核心语义，避免引入无关词汇。</Step>
+
+                    <Step>5. 控制关键词数量在5～20个之间，根据文本长度和复杂度调整。</Step>
+
+                    <Step>6. 如果输入为问句，重点关注问题中的主题和意图。</Step>
+
+                </Instructions>
+
+                <Example>
+
+                    <Input>如何治疗感冒引起的头痛？</Input>
+
+                    <Output>["感冒", "头痛", "治疗", "感冒头痛", "缓解头痛", "感冒症状", "头痛药物", "退烧药",
+            "止痛药", "流感", "上呼吸道感染"]</Output>
+
+                </Example>
+
+                <Note>只输出关键词JSON数组，不包含任何额外解释或文本。</Note>
+
+            </Prompt>'
+        selected: false
+        title: 提取关键字富化查询条件
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1771965837737'
+      position:
+        x: 1066
+        y: 55
+      positionAbsolute:
+        x: 1066
+        y: 55
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: false
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: which dataset you want to add to
+            ja_JP: 追加先のデータセット
+            pt_BR: which dataset you want to add to
+            zh_Hans: 你想要添加到哪个数据集
+          label:
+            en_US: Dataset ID
+            ja_JP: データセットID
+            pt_BR: Dataset ID
+            zh_Hans: 数据集 ID
+          llm_description: which dataset you want to add to
+          max: null
+          min: null
+          name: dataset_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: existing document identifier to update directly; the tool validates
+              it before sending the request
+            ja_JP: 既存ドキュメントを直接更新するためのID。リクエスト前に存在確認を行います
+            pt_BR: existing document identifier to update directly; the tool validates
+              it before sending the request
+            zh_Hans: 直接更新的既有文档 ID，发送请求前会先验证是否存在
+          label:
+            en_US: Document ID
+            ja_JP: ドキュメントID
+            pt_BR: Document ID
+            zh_Hans: 文档 ID
+          llm_description: existing document identifier to update directly
+          max: null
+          min: null
+          name: document_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: document name used for UPSERT when document_id is not supplied
+            ja_JP: ドキュメントの登録・更新に利用する名称
+            pt_BR: document name used for UPSERT when document_id is not supplied
+            zh_Hans: 用于创建或更新文档的名称
+          label:
+            en_US: Document Name
+            ja_JP: ドキュメント名
+            pt_BR: Document Name
+            zh_Hans: 文档名称
+          llm_description: document name used for UPSERT when document_id is not supplied
+          max: null
+          min: null
+          name: name
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: the content you want to add to knowledge base
+            ja_JP: ナレッジベースへ追加したいコンテンツ
+            pt_BR: the content you want to add to knowledge base
+            zh_Hans: 你想要添加到知识库的内容
+          label:
+            en_US: Content
+            ja_JP: コンテンツ
+            pt_BR: Content
+            zh_Hans: 内容
+          llm_description: the content you want to add to knowledge base
+          max: null
+          min: null
+          name: text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: high_quality
+          form: form
+          human_description:
+            en_US: the indexing technique you want to use
+            ja_JP: 使用したいインデックス方式
+            pt_BR: the indexing technique you want to use
+            zh_Hans: 你想要使用的索引方式
+          label:
+            en_US: Index Method
+            ja_JP: インデックス方式
+            pt_BR: Index Method
+            zh_Hans: 索引方式
+          llm_description: ''
+          max: null
+          min: null
+          name: indexing_technique
+          options:
+          - icon: ''
+            label:
+              en_US: High Quality
+              ja_JP: 高品質
+              pt_BR: High Quality
+              zh_Hans: 高质量
+            value: high_quality
+          - icon: ''
+            label:
+              en_US: Economy
+              ja_JP: エコノミー
+              pt_BR: Economy
+              zh_Hans: 经济
+            value: economy
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: the chunk settings
+            ja_JP: チャンク設定
+            pt_BR: the chunk settings
+            zh_Hans: 分段方式
+          label:
+            en_US: Chunk Method
+            ja_JP: チャンク方式
+            pt_BR: Chunk Method
+            zh_Hans: 分段方式
+          llm_description: ''
+          max: null
+          min: null
+          name: doc_form
+          options:
+          - icon: ''
+            label:
+              en_US: General
+              ja_JP: 一般
+              pt_BR: General
+              zh_Hans: 通用
+            value: text_model
+          - icon: ''
+            label:
+              en_US: Parent-child
+              ja_JP: 親子分割
+              pt_BR: Parent-child
+              zh_Hans: 父子分段
+            value: hierarchical_model
+          - icon: ''
+            label:
+              en_US: Q&A
+              ja_JP: Q&A分割
+              pt_BR: Q&A
+              zh_Hans: Q&A分段
+            value: qa_model
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: only for Q&A Chunk Method
+            ja_JP: Q&Aチャンク方式でのみ利用
+            pt_BR: only for Q&A Chunk Method
+            zh_Hans: 仅适用于 Q&A 分段方式
+          label:
+            en_US: Document Language
+            ja_JP: ドキュメントの言語
+            pt_BR: Document Language
+            zh_Hans: 文档语言
+          llm_description: ''
+          max: null
+          min: null
+          name: doc_language
+          options:
+          - icon: ''
+            label:
+              en_US: English
+              ja_JP: 英語
+              pt_BR: English
+              zh_Hans: 英语
+            value: English
+          - icon: ''
+            label:
+              en_US: Japanese
+              ja_JP: 日本語
+              pt_BR: Japanese
+              zh_Hans: 日语
+            value: Japanese
+          - icon: ''
+            label:
+              en_US: Chinese
+              ja_JP: 中国語
+              pt_BR: Chinese
+              zh_Hans: 中文
+            value: Chinese
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: '{"mode": "automatic"}'
+          form: form
+          human_description:
+            en_US: 'Must be a valid JSON string, See plugin detail page for more details
+
+              '
+            ja_JP: '有効なJSON文字列を指定してください。詳細はプラグイン詳細ページを参照してください。
+
+              '
+            pt_BR: 'Must be a valid JSON string, See plugin detail page for more details
+
+              '
+            zh_Hans: '必须是一个有效的 JSON 字符串，请参考插件详情页获取更多信息
+
+              '
+          label:
+            en_US: Process Rule
+            ja_JP: 処理ルール
+            pt_BR: Process Rule
+            zh_Hans: 处理规则
+          llm_description: ''
+          max: null
+          min: null
+          name: process_rule
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Optional per-tool timeout; falls back to the provider setting when
+              omitted
+            ja_JP: ツール単位の任意タイムアウト。未指定時はプロバイダー設定を使用します
+            pt_BR: Optional per-tool timeout; falls back to the provider setting when
+              omitted
+            zh_Hans: 工具级别的可选超时时间；留空时使用提供者设置
+          label:
+            en_US: Timeout (seconds)
+            ja_JP: タイムアウト（秒）
+            pt_BR: Timeout (seconds)
+            zh_Hans: 超时时间（秒）
+          llm_description: ''
+          max: null
+          min: null
+          name: timeout_seconds
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Optional retries for network errors and 5xx responses; defaults
+              to provider setting
+            ja_JP: ネットワークエラーや5xx応答に対する任意の再試行回数。未指定時はプロバイダー設定を利用します
+            pt_BR: Optional retries for network errors and 5xx responses; defaults
+              to provider setting
+            zh_Hans: 针对网络错误和 5xx 响应的可选重试次数；默认为提供者设置
+          label:
+            en_US: Retry Attempts
+            ja_JP: 再試行回数
+            pt_BR: Retry Attempts
+            zh_Hans: 重试次数
+          llm_description: ''
+          max: null
+          min: null
+          name: retry_attempts
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        params:
+          dataset_id: ''
+          doc_form: ''
+          doc_language: ''
+          document_id: ''
+          indexing_technique: ''
+          name: ''
+          process_rule: ''
+          retry_attempts: ''
+          text: ''
+          timeout_seconds: ''
+        plugin_id: r3-yamauchi/knowledgebase_update
+        plugin_unique_identifier: r3-yamauchi/knowledgebase_update:0.0.1@cd115deb1817e8d89d605cfb1a1d3fd4f96c0f4fb767cddb7948ab4ea0a0e35d
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=3da762ab72ff7f69420b7edfc4a788f9c848155ff158fa12a86c564e93ee2b68.svg
+        provider_id: r3-yamauchi/knowledgebase_update/knowledgebase_update
+        provider_name: r3-yamauchi/knowledgebase_update/knowledgebase_update
+        provider_type: builtin
+        selected: false
+        title: 更新文档
+        tool_configurations:
+          doc_form:
+            type: constant
+            value: text_model
+          doc_language:
+            type: constant
+            value: null
+          indexing_technique:
+            type: constant
+            value: high_quality
+          process_rule:
+            type: mixed
+            value: '{"mode": "automatic"}'
+          retry_attempts:
+            type: constant
+            value: null
+          timeout_seconds:
+            type: constant
+            value: null
+        tool_description: 使用原始文本在知识库中创建或更新文档
+        tool_label: 更新文档
+        tool_name: update
+        tool_node_version: '2'
+        tool_parameters:
+          dataset_id:
+            type: mixed
+            value: 510fc8cb-47a1-4491-812d-bc000516d747
+          document_id:
+            type: mixed
+            value: ''
+          name:
+            type: mixed
+            value: '{{#1771971947820.text#}}_{{#sys.conversation_id#}}_{{#sys.dialogue_count#}}'
+          text:
+            type: mixed
+            value: '{
+
+              "quest":"{{#sys.query#}}"
+
+              "answer":"{{#llm.text#}}"
+
+              }'
+        type: tool
+      height: 218
+      id: '1771968611938'
+      position:
+        x: 2474
+        y: 148
+      positionAbsolute:
+        x: 2474
+        y: 148
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: '%Y-%m-%d %H:%M:%S'
+          form: form
+          human_description:
+            en_US: Time format in strftime standard.
+            ja_JP: Time format in strftime standard.
+            pt_BR: Time format in strftime standard.
+            zh_Hans: strftime 标准的时间格式。
+          label:
+            en_US: Format
+            ja_JP: Format
+            pt_BR: Format
+            zh_Hans: 格式
+          llm_description: null
+          max: null
+          min: null
+          name: format
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: UTC
+          form: form
+          human_description:
+            en_US: Timezone
+            ja_JP: Timezone
+            pt_BR: Timezone
+            zh_Hans: 时区
+          label:
+            en_US: Timezone
+            ja_JP: Timezone
+            pt_BR: Timezone
+            zh_Hans: 时区
+          llm_description: null
+          max: null
+          min: null
+          name: timezone
+          options:
+          - icon: null
+            label:
+              en_US: UTC
+              ja_JP: UTC
+              pt_BR: UTC
+              zh_Hans: UTC
+            value: UTC
+          - icon: null
+            label:
+              en_US: America/New_York
+              ja_JP: America/New_York
+              pt_BR: America/New_York
+              zh_Hans: 美洲/纽约
+            value: America/New_York
+          - icon: null
+            label:
+              en_US: America/Los_Angeles
+              ja_JP: America/Los_Angeles
+              pt_BR: America/Los_Angeles
+              zh_Hans: 美洲/洛杉矶
+            value: America/Los_Angeles
+          - icon: null
+            label:
+              en_US: America/Chicago
+              ja_JP: America/Chicago
+              pt_BR: America/Chicago
+              zh_Hans: 美洲/芝加哥
+            value: America/Chicago
+          - icon: null
+            label:
+              en_US: America/Sao_Paulo
+              ja_JP: America/Sao_Paulo
+              pt_BR: América/São Paulo
+              zh_Hans: 美洲/圣保罗
+            value: America/Sao_Paulo
+          - icon: null
+            label:
+              en_US: Asia/Shanghai
+              ja_JP: Asia/Shanghai
+              pt_BR: Asia/Shanghai
+              zh_Hans: 亚洲/上海
+            value: Asia/Shanghai
+          - icon: null
+            label:
+              en_US: Asia/Ho_Chi_Minh
+              ja_JP: Asia/Ho_Chi_Minh
+              pt_BR: Ásia/Ho Chi Minh
+              zh_Hans: 亚洲/胡志明市
+            value: Asia/Ho_Chi_Minh
+          - icon: null
+            label:
+              en_US: Asia/Tokyo
+              ja_JP: Asia/Tokyo
+              pt_BR: Asia/Tokyo
+              zh_Hans: 亚洲/东京
+            value: Asia/Tokyo
+          - icon: null
+            label:
+              en_US: Asia/Dubai
+              ja_JP: Asia/Dubai
+              pt_BR: Asia/Dubai
+              zh_Hans: 亚洲/迪拜
+            value: Asia/Dubai
+          - icon: null
+            label:
+              en_US: Asia/Kolkata
+              ja_JP: Asia/Kolkata
+              pt_BR: Asia/Kolkata
+              zh_Hans: 亚洲/加尔各答
+            value: Asia/Kolkata
+          - icon: null
+            label:
+              en_US: Asia/Seoul
+              ja_JP: Asia/Seoul
+              pt_BR: Asia/Seoul
+              zh_Hans: 亚洲/首尔
+            value: Asia/Seoul
+          - icon: null
+            label:
+              en_US: Asia/Singapore
+              ja_JP: Asia/Singapore
+              pt_BR: Asia/Singapore
+              zh_Hans: 亚洲/新加坡
+            value: Asia/Singapore
+          - icon: null
+            label:
+              en_US: Europe/London
+              ja_JP: Europe/London
+              pt_BR: Europe/London
+              zh_Hans: 欧洲/伦敦
+            value: Europe/London
+          - icon: null
+            label:
+              en_US: Europe/Berlin
+              ja_JP: Europe/Berlin
+              pt_BR: Europe/Berlin
+              zh_Hans: 欧洲/柏林
+            value: Europe/Berlin
+          - icon: null
+            label:
+              en_US: Europe/Moscow
+              ja_JP: Europe/Moscow
+              pt_BR: Europe/Moscow
+              zh_Hans: 欧洲/莫斯科
+            value: Europe/Moscow
+          - icon: null
+            label:
+              en_US: Australia/Sydney
+              ja_JP: Australia/Sydney
+              pt_BR: Australia/Sydney
+              zh_Hans: 澳大利亚/悉尼
+            value: Australia/Sydney
+          - icon: null
+            label:
+              en_US: Pacific/Auckland
+              ja_JP: Pacific/Auckland
+              pt_BR: Pacific/Auckland
+              zh_Hans: 太平洋/奥克兰
+            value: Pacific/Auckland
+          - icon: null
+            label:
+              en_US: Africa/Cairo
+              ja_JP: Africa/Cairo
+              pt_BR: Africa/Cairo
+              zh_Hans: 非洲/开罗
+            value: Africa/Cairo
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        params:
+          format: ''
+          timezone: ''
+        plugin_id: null
+        plugin_unique_identifier: ''
+        provider_icon: /console/api/workspaces/current/tool-provider/builtin/time/icon
+        provider_id: time
+        provider_name: time
+        provider_type: builtin
+        selected: false
+        title: 获取日期
+        tool_configurations:
+          format:
+            type: mixed
+            value: '%Y-%m-%d'
+          timezone:
+            type: constant
+            value: Asia/Shanghai
+        tool_description: 一个用于获取当前时间的工具。
+        tool_label: 获取当前时间
+        tool_name: current_time
+        tool_node_version: '2'
+        tool_parameters: {}
+        type: tool
+      height: 114
+      id: '1771971947820'
+      position:
+        x: 2132
+        y: 200
+      positionAbsolute:
+        x: 2132
+        y: 200
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 91fbc3a2-e255-41b2-9233-4ada307747f1
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 'true'
+          logical_operator: and
+        selected: false
+        title: 判断是否存在文件上传
+        type: if-else
+      height: 124
+      id: '1771975195871'
+      position:
+        x: 342
+        y: 12
+      positionAbsolute:
+        x: 342
+        y: 12
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: '%Y-%m-%d %H:%M:%S'
+          form: form
+          human_description:
+            en_US: Time format in strftime standard.
+            ja_JP: Time format in strftime standard.
+            pt_BR: Time format in strftime standard.
+            zh_Hans: strftime 标准的时间格式。
+          label:
+            en_US: Format
+            ja_JP: Format
+            pt_BR: Format
+            zh_Hans: 格式
+          llm_description: null
+          max: null
+          min: null
+          name: format
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: UTC
+          form: form
+          human_description:
+            en_US: Timezone
+            ja_JP: Timezone
+            pt_BR: Timezone
+            zh_Hans: 时区
+          label:
+            en_US: Timezone
+            ja_JP: Timezone
+            pt_BR: Timezone
+            zh_Hans: 时区
+          llm_description: null
+          max: null
+          min: null
+          name: timezone
+          options:
+          - icon: null
+            label:
+              en_US: UTC
+              ja_JP: UTC
+              pt_BR: UTC
+              zh_Hans: UTC
+            value: UTC
+          - icon: null
+            label:
+              en_US: America/New_York
+              ja_JP: America/New_York
+              pt_BR: America/New_York
+              zh_Hans: 美洲/纽约
+            value: America/New_York
+          - icon: null
+            label:
+              en_US: America/Los_Angeles
+              ja_JP: America/Los_Angeles
+              pt_BR: America/Los_Angeles
+              zh_Hans: 美洲/洛杉矶
+            value: America/Los_Angeles
+          - icon: null
+            label:
+              en_US: America/Chicago
+              ja_JP: America/Chicago
+              pt_BR: America/Chicago
+              zh_Hans: 美洲/芝加哥
+            value: America/Chicago
+          - icon: null
+            label:
+              en_US: America/Sao_Paulo
+              ja_JP: America/Sao_Paulo
+              pt_BR: América/São Paulo
+              zh_Hans: 美洲/圣保罗
+            value: America/Sao_Paulo
+          - icon: null
+            label:
+              en_US: Asia/Shanghai
+              ja_JP: Asia/Shanghai
+              pt_BR: Asia/Shanghai
+              zh_Hans: 亚洲/上海
+            value: Asia/Shanghai
+          - icon: null
+            label:
+              en_US: Asia/Ho_Chi_Minh
+              ja_JP: Asia/Ho_Chi_Minh
+              pt_BR: Ásia/Ho Chi Minh
+              zh_Hans: 亚洲/胡志明市
+            value: Asia/Ho_Chi_Minh
+          - icon: null
+            label:
+              en_US: Asia/Tokyo
+              ja_JP: Asia/Tokyo
+              pt_BR: Asia/Tokyo
+              zh_Hans: 亚洲/东京
+            value: Asia/Tokyo
+          - icon: null
+            label:
+              en_US: Asia/Dubai
+              ja_JP: Asia/Dubai
+              pt_BR: Asia/Dubai
+              zh_Hans: 亚洲/迪拜
+            value: Asia/Dubai
+          - icon: null
+            label:
+              en_US: Asia/Kolkata
+              ja_JP: Asia/Kolkata
+              pt_BR: Asia/Kolkata
+              zh_Hans: 亚洲/加尔各答
+            value: Asia/Kolkata
+          - icon: null
+            label:
+              en_US: Asia/Seoul
+              ja_JP: Asia/Seoul
+              pt_BR: Asia/Seoul
+              zh_Hans: 亚洲/首尔
+            value: Asia/Seoul
+          - icon: null
+            label:
+              en_US: Asia/Singapore
+              ja_JP: Asia/Singapore
+              pt_BR: Asia/Singapore
+              zh_Hans: 亚洲/新加坡
+            value: Asia/Singapore
+          - icon: null
+            label:
+              en_US: Europe/London
+              ja_JP: Europe/London
+              pt_BR: Europe/London
+              zh_Hans: 欧洲/伦敦
+            value: Europe/London
+          - icon: null
+            label:
+              en_US: Europe/Berlin
+              ja_JP: Europe/Berlin
+              pt_BR: Europe/Berlin
+              zh_Hans: 欧洲/柏林
+            value: Europe/Berlin
+          - icon: null
+            label:
+              en_US: Europe/Moscow
+              ja_JP: Europe/Moscow
+              pt_BR: Europe/Moscow
+              zh_Hans: 欧洲/莫斯科
+            value: Europe/Moscow
+          - icon: null
+            label:
+              en_US: Australia/Sydney
+              ja_JP: Australia/Sydney
+              pt_BR: Australia/Sydney
+              zh_Hans: 澳大利亚/悉尼
+            value: Australia/Sydney
+          - icon: null
+            label:
+              en_US: Pacific/Auckland
+              ja_JP: Pacific/Auckland
+              pt_BR: Pacific/Auckland
+              zh_Hans: 太平洋/奥克兰
+            value: Pacific/Auckland
+          - icon: null
+            label:
+              en_US: Africa/Cairo
+              ja_JP: Africa/Cairo
+              pt_BR: Africa/Cairo
+              zh_Hans: 非洲/开罗
+            value: Africa/Cairo
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        params:
+          format: ''
+          timezone: ''
+        plugin_id: null
+        plugin_unique_identifier: ''
+        provider_icon: /console/api/workspaces/current/tool-provider/builtin/time/icon
+        provider_id: time
+        provider_name: time
+        provider_type: builtin
+        selected: false
+        title: 获取日期
+        tool_configurations:
+          format:
+            type: mixed
+            value: '%Y-%m-%d'
+          timezone:
+            type: constant
+            value: Asia/Shanghai
+        tool_description: 一个用于获取当前时间的工具。
+        tool_label: 获取当前时间
+        tool_name: current_time
+        tool_node_version: '2'
+        tool_parameters: {}
+        type: tool
+      height: 114
+      id: '17719753982140'
+      position:
+        x: 704
+        y: 275
+      positionAbsolute:
+        x: 704
+        y: 275
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: which dataset you want to add to
+            ja_JP: 追加先のデータセット
+            pt_BR: which dataset you want to add to
+            zh_Hans: 你想要添加到哪个数据集
+          label:
+            en_US: Dataset ID
+            ja_JP: データセットID
+            pt_BR: Dataset ID
+            zh_Hans: 数据集 ID
+          llm_description: which dataset you want to add to
+          max: null
+          min: null
+          name: dataset_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: existing document identifier to update directly; the tool validates
+              it before sending the request
+            ja_JP: 既存ドキュメントを直接更新するためのID。リクエスト前に存在確認を行います
+            pt_BR: existing document identifier to update directly; the tool validates
+              it before sending the request
+            zh_Hans: 直接更新的既有文档 ID，发送请求前会先验证是否存在
+          label:
+            en_US: Document ID
+            ja_JP: ドキュメントID
+            pt_BR: Document ID
+            zh_Hans: 文档 ID
+          llm_description: existing document identifier to update directly
+          max: null
+          min: null
+          name: document_id
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Document name applied when creating or updating; falls back to
+              the uploaded filename when omitted
+            ja_JP: ドキュメントの登録・更新に利用する名称。省略時はアップロードファイル名を自動使用します
+            pt_BR: Document name applied when creating or updating; falls back to
+              the uploaded filename when omitted
+            zh_Hans: 在创建或更新时使用的文档名称；若省略则自动使用上传文件名
+          label:
+            en_US: Document Name
+            ja_JP: ドキュメント名
+            pt_BR: Document Name
+            zh_Hans: 文档名称
+          llm_description: document name used for UPSERT when document_id is not provided;
+            falls back to the uploaded filename when omitted
+          max: null
+          min: null
+          name: name
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: the file you want to upload to the knowledge base
+            ja_JP: ナレッジベースへ登録したいファイル
+            pt_BR: the file you want to upload to the knowledge base
+            zh_Hans: 你想要上传到知识库的文件
+          label:
+            en_US: File
+            ja_JP: ファイル
+            pt_BR: File
+            zh_Hans: 文件
+          llm_description: the file you want to upload to the knowledge base
+          max: null
+          min: null
+          name: file
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: file
+        - auto_generate: null
+          default: high_quality
+          form: form
+          human_description:
+            en_US: the indexing technique you want to use
+            ja_JP: 使用したいインデックス方式
+            pt_BR: the indexing technique you want to use
+            zh_Hans: 你想要使用的索引方式
+          label:
+            en_US: Index Method
+            ja_JP: インデックス方式
+            pt_BR: Index Method
+            zh_Hans: 索引方式
+          llm_description: ''
+          max: null
+          min: null
+          name: indexing_technique
+          options:
+          - icon: ''
+            label:
+              en_US: High Quality
+              ja_JP: 高品質
+              pt_BR: High Quality
+              zh_Hans: 高质量
+            value: high_quality
+          - icon: ''
+            label:
+              en_US: Economy
+              ja_JP: エコノミー
+              pt_BR: Economy
+              zh_Hans: 经济
+            value: economy
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: the chunk settings
+            ja_JP: チャンク設定
+            pt_BR: the chunk settings
+            zh_Hans: 分段方式
+          label:
+            en_US: Chunk Method
+            ja_JP: チャンク方式
+            pt_BR: Chunk Method
+            zh_Hans: 分段方式
+          llm_description: ''
+          max: null
+          min: null
+          name: doc_form
+          options:
+          - icon: ''
+            label:
+              en_US: General
+              ja_JP: 一般
+              pt_BR: General
+              zh_Hans: 通用
+            value: text_model
+          - icon: ''
+            label:
+              en_US: Parent-child
+              ja_JP: 親子分割
+              pt_BR: Parent-child
+              zh_Hans: 父子分段
+            value: hierarchical_model
+          - icon: ''
+            label:
+              en_US: Q&A
+              ja_JP: Q&A分割
+              pt_BR: Q&A
+              zh_Hans: Q&A分段
+            value: qa_model
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: only for Q&A Chunk Method
+            ja_JP: Q&Aチャンク方式でのみ利用
+            pt_BR: only for Q&A Chunk Method
+            zh_Hans: 仅适用于 Q&A 分段方式
+          label:
+            en_US: Document Language
+            ja_JP: ドキュメントの言語
+            pt_BR: Document Language
+            zh_Hans: 文档语言
+          llm_description: ''
+          max: null
+          min: null
+          name: doc_language
+          options:
+          - icon: ''
+            label:
+              en_US: English
+              ja_JP: 英語
+              pt_BR: English
+              zh_Hans: 英语
+            value: English
+          - icon: ''
+            label:
+              en_US: Japanese
+              ja_JP: 日本語
+              pt_BR: Japanese
+              zh_Hans: 日语
+            value: Japanese
+          - icon: ''
+            label:
+              en_US: Chinese
+              ja_JP: 中国語
+              pt_BR: Chinese
+              zh_Hans: 中文
+            value: Chinese
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: '{"mode": "automatic"}'
+          form: form
+          human_description:
+            en_US: 'Must be a valid JSON string, See plugin detail page for more details
+
+              '
+            ja_JP: '有効なJSON文字列を指定してください。詳細はプラグイン詳細ページを参照してください。
+
+              '
+            pt_BR: 'Must be a valid JSON string, See plugin detail page for more details
+
+              '
+            zh_Hans: '必须是一个有效的 JSON 字符串，请参考插件详情页获取更多信息
+
+              '
+          label:
+            en_US: Process Rule
+            ja_JP: 処理ルール
+            pt_BR: Process Rule
+            zh_Hans: 处理规则
+          llm_description: ''
+          max: null
+          min: null
+          name: process_rule
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Optional per-tool timeout; falls back to the provider value when
+              blank
+            ja_JP: ツールごとの任意タイムアウト。未指定時はプロバイダー設定を使用します
+            pt_BR: Optional per-tool timeout; falls back to the provider value when
+              blank
+            zh_Hans: 工具级别的可选超时时间；留空时使用提供者设置
+          label:
+            en_US: Timeout (seconds)
+            ja_JP: タイムアウト（秒）
+            pt_BR: Timeout (seconds)
+            zh_Hans: 超时时间（秒）
+          llm_description: ''
+          max: null
+          min: null
+          name: timeout_seconds
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Optional retries for network errors or 5xx responses; defaults
+              to provider
+            ja_JP: ネットワークエラーや 5xx 応答に対する任意の再試行回数。未指定時はプロバイダー設定が適用されます
+            pt_BR: Optional retries for network errors or 5xx responses; defaults
+              to provider
+            zh_Hans: 针对网络错误或 5xx 响应的可选重试次数；默认为提供者设置
+          label:
+            en_US: Retry Attempts
+            ja_JP: 再試行回数
+            pt_BR: Retry Attempts
+            zh_Hans: 重试次数
+          llm_description: ''
+          max: null
+          min: null
+          name: retry_attempts
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        params:
+          dataset_id: ''
+          doc_form: ''
+          doc_language: ''
+          document_id: ''
+          file: ''
+          indexing_technique: ''
+          name: ''
+          process_rule: ''
+          retry_attempts: ''
+          timeout_seconds: ''
+        plugin_id: r3-yamauchi/knowledgebase_update
+        plugin_unique_identifier: r3-yamauchi/knowledgebase_update:0.0.1@cd115deb1817e8d89d605cfb1a1d3fd4f96c0f4fb767cddb7948ab4ea0a0e35d
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=3da762ab72ff7f69420b7edfc4a788f9c848155ff158fa12a86c564e93ee2b68.svg
+        provider_id: r3-yamauchi/knowledgebase_update/knowledgebase_update
+        provider_name: r3-yamauchi/knowledgebase_update/knowledgebase_update
+        provider_type: builtin
+        selected: false
+        title: 上传文档
+        tool_configurations:
+          doc_form:
+            type: constant
+            value: text_model
+          doc_language:
+            type: constant
+            value: null
+          indexing_technique:
+            type: constant
+            value: high_quality
+          process_rule:
+            type: mixed
+            value: '{"mode": "automatic"}'
+          retry_attempts:
+            type: constant
+            value: null
+          timeout_seconds:
+            type: constant
+            value: null
+        tool_description: 将文件上传到知识库，如果存在同名文档则会覆盖更新
+        tool_label: 上传文档
+        tool_name: upload
+        tool_node_version: '2'
+        tool_parameters:
+          dataset_id:
+            type: mixed
+            value: 510fc8cb-47a1-4491-812d-bc000516d747
+          document_id:
+            type: mixed
+            value: null
+          file:
+            type: variable
+            value:
+            - sys
+            - files
+          name:
+            type: mixed
+            value: '{{#17719753982140.text#}}_{{#sys.conversation_id#}}_{{#sys.dialogue_count#}}_files'
+        type: tool
+      height: 218
+      id: '17719753982141'
+      position:
+        x: 1046
+        y: 223
+      positionAbsolute:
+        x: 1046
+        y: 223
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        author: eanrach
+        desc: ''
+        height: 280
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"添加上传的文档到知识库","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 614
+      height: 280
+      id: '1771975697359'
+      position:
+        x: 704
+        y: 188.02867016475318
+      positionAbsolute:
+        x: 704
+        y: 188.02867016475318
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 614
+    - data:
+        author: eanrach
+        desc: ''
+        height: 177
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"总结最近10轮对话的信息","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"对历史对话和上传的文件进行检索","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"listitem","version":1,"value":2}],"direction":null,"format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 634
+      height: 177
+      id: '1771975737308'
+      position:
+        x: 1046
+        y: -7.616871630643672
+      positionAbsolute:
+        x: 1046
+        y: -7.616871630643672
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 634
+    - data:
+        author: eanrach
+        desc: ''
+        height: 280
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"本轮对话存入知识库","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 678
+      height: 280
+      id: '1771975782034'
+      position:
+        x: 2122.1343824528203
+        y: 109
+      positionAbsolute:
+        x: 2122.1343824528203
+        y: 109
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 678
+    - data:
+        author: eanrach
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"默认记忆窗口为50轮对话","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1771975839049'
+      position:
+        x: 1760.0000000000002
+        y: -7.616871630643672
+      positionAbsolute:
+        x: 1760.0000000000002
+        y: -7.616871630643672
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    viewport:
+      x: 136.83125671582616
+      y: 289.2943703085364
+      zoom: 0.6093853943072869
+  rag_pipeline_variables: []
