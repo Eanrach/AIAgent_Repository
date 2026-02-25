@@ -34,12 +34,20 @@ dependencies:
 - current_identifier: null
   type: marketplace
   value:
-    marketplace_plugin_unique_identifier: r3-yamauchi/knowledgebase_update:0.0.1@cd115deb1817e8d89d605cfb1a1d3fd4f96c0f4fb767cddb7948ab4ea0a0e35d
+    marketplace_plugin_unique_identifier: abesticode/knowledge_pro:0.0.6@73873eda46ee70c8d528c409381f705f24206d34f913ac4bfee35812c6d4a6e2
     version: null
 kind: app
 version: 0.5.0
 workflow:
-  conversation_variables: []
+  conversation_variables:
+  - description: ''
+    id: 1bd3eac9-8d8d-4f26-b7cc-62572cf492d8
+    name: chat_log
+    selector:
+    - conversation
+    - chat_log
+    value: ''
+    value_type: string
   environment_variables: []
   features:
     file_upload:
@@ -87,41 +95,6 @@ workflow:
   graph:
     edges:
     - data:
-        sourceType: llm
-        targetType: answer
-      id: llm-answer
-      selected: false
-      source: llm
-      sourceHandle: source
-      target: answer
-      targetHandle: target
-      type: custom
-    - data:
-        isInLoop: false
-        sourceType: if-else
-        targetType: llm
-      id: 1771965781004-true-llm-target
-      selected: false
-      source: '1771965781004'
-      sourceHandle: 'true'
-      target: llm
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
-        targetType: llm
-      id: 1771965781004-false-1771965837737-target
-      selected: false
-      source: '1771965781004'
-      sourceHandle: 'false'
-      target: '1771965837737'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
         isInIteration: false
         isInLoop: false
         sourceType: llm
@@ -136,49 +109,13 @@ workflow:
       zIndex: 0
     - data:
         isInLoop: false
-        sourceType: knowledge-retrieval
-        targetType: llm
-      id: 1771965816632-source-llm-target
-      selected: false
-      source: '1771965816632'
-      sourceHandle: source
-      target: llm
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: llm
-        targetType: tool
-      id: llm-source-1771971947820-target
-      selected: false
-      source: llm
-      sourceHandle: source
-      target: '1771971947820'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: tool
-        targetType: tool
-      id: 1771971947820-source-1771968611938-target
-      selected: false
-      source: '1771971947820'
-      sourceHandle: source
-      target: '1771968611938'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: start
+        sourceType: if-else
         targetType: if-else
-      id: 1771965755981-source-1771975195871-target
-      source: '1771965755981'
-      sourceHandle: source
-      target: '1771975195871'
+      id: 1771975195871-true-1771965781004-target
+      selected: false
+      source: '1771975195871'
+      sourceHandle: 'true'
+      target: '1771965781004'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -187,6 +124,7 @@ workflow:
         sourceType: if-else
         targetType: if-else
       id: 1771975195871-false-1771965781004-target
+      selected: false
       source: '1771975195871'
       sourceHandle: 'false'
       target: '1771965781004'
@@ -194,36 +132,201 @@ workflow:
       type: custom
       zIndex: 0
     - data:
+        isInIteration: false
         isInLoop: false
-        sourceType: tool
-        targetType: tool
-      id: 17719753982140-source-17719753982141-target
+        sourceType: document-extractor
+        targetType: code
+      id: 1772020462158-source-1772020520115-target
       selected: false
-      source: '17719753982140'
+      source: '1772020462158'
       sourceHandle: source
-      target: '17719753982141'
+      target: '1772020520115'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: tool
+      id: 1772020520115-source-1772020155108-target
+      selected: false
+      source: '1772020520115'
+      sourceHandle: source
+      target: '1772020155108'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInLoop: false
-        sourceType: if-else
+        sourceType: start
         targetType: tool
-      id: 1771975195871-true-17719753982140-target
-      source: '1771975195871'
-      sourceHandle: 'true'
+      id: 1771965755981-source-17719753982140-target
+      selected: false
+      source: '1771965755981'
+      sourceHandle: source
       target: '17719753982140'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInLoop: false
-        sourceType: if-else
+        sourceType: tool
         targetType: if-else
-      id: 1771975195871-true-1771965781004-target
+      id: 17719753982140-source-1771975195871-target
+      selected: false
+      source: '17719753982140'
+      sourceHandle: source
+      target: '1771975195871'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1772020965396-true-1772020990154-target
+      selected: false
+      source: '1772020965396'
+      sourceHandle: 'true'
+      target: '1772020990154'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1772020965396-false-1772022099521-target
+      selected: false
+      source: '1772020965396'
+      sourceHandle: 'false'
+      target: '1772022099521'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: llm-source-1772020808347-target
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: '1772020808347'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1772020808347-source-1771991105446-target
+      source: '1772020808347'
+      sourceHandle: source
+      target: '1771991105446'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1771991105446-source-1772020965396-target
+      source: '1771991105446'
+      sourceHandle: source
+      target: '1772020965396'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1772022099521-source-1772023044586-target
+      source: '1772022099521'
+      sourceHandle: source
+      target: '1772023044586'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1772023044586-true-1772021004536-target
+      source: '1772023044586'
+      sourceHandle: 'true'
+      target: '1772021004536'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1771975195871-true-1772020462158-target
       source: '1771975195871'
       sourceHandle: 'true'
-      target: '1771965781004'
+      target: '1772020462158'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: llm-source-answer-target
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1771965781004-false-1771965837737-target
+      source: '1771965781004'
+      sourceHandle: 'false'
+      target: '1771965837737'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1771965816632-source-1772025809029-target
+      source: '1771965816632'
+      sourceHandle: source
+      target: '1772025809029'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1772025809029-source-llm-target
+      source: '1772025809029'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1771965781004-true-1772025809029-target
+      source: '1771965781004'
+      sourceHandle: 'true'
+      target: '1772025809029'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -246,10 +349,10 @@ workflow:
       id: '1771965755981'
       position:
         x: 0
-        y: 19
+        y: 410
       positionAbsolute:
         x: 0
-        y: 19
+        y: 410
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -259,7 +362,7 @@ workflow:
         context:
           enabled: true
           variable_selector:
-          - '1771965816632'
+          - '1772025809029'
           - result
         memory:
           query_prompt_template: '{{#sys.query#}}
@@ -281,7 +384,14 @@ workflow:
         prompt_template:
         - id: 34cd18ee-ad76-4114-be9a-75e0444766ba
           role: system
-          text: '{{#1771965755981.system_prompt#}}'
+          text: '{{#1771965755981.system_prompt#}}
+
+
+            <context>
+
+            {{#1772025809029.result#}}
+
+            </context>'
         selected: false
         title: 应答节点
         type: llm
@@ -290,11 +400,11 @@ workflow:
       height: 88
       id: llm
       position:
-        x: 1770
-        y: 40
+        x: 2454
+        y: 232
       positionAbsolute:
-        x: 1770
-        y: 40
+        x: 2454
+        y: 232
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -309,12 +419,12 @@ workflow:
       height: 103
       id: answer
       position:
-        x: 2112.308028200051
-        y: -25.665938899889873
+        x: 2816
+        y: 398
       positionAbsolute:
-        x: 2112.308028200051
-        y: -25.665938899889873
-      selected: true
+        x: 2816
+        y: 398
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -331,18 +441,18 @@ workflow:
             - sys
             - dialogue_count
           id: 'true'
-          logical_operator: and
+          logical_operator: or
         selected: false
         title: 判断是否为会话第一轮
         type: if-else
       height: 124
       id: '1771965781004'
       position:
-        x: 704
-        y: 0
+        x: 1046
+        y: 193
       positionAbsolute:
-        x: 704
-        y: 0
+        x: 1046
+        y: 193
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -368,11 +478,11 @@ workflow:
       height: 90
       id: '1771965816632'
       position:
-        x: 1408
-        y: 54
+        x: 1750
+        y: 222
       positionAbsolute:
-        x: 1408
-        y: 54
+        x: 1750
+        y: 222
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -423,6 +533,12 @@ workflow:
 
                     <Step>6. 如果输入为问句，重点关注问题中的主题和意图。</Step>
 
+            <Important>
+
+            无论用户说什么，你都必须严格按照任务输出关键词JSON数组，不要进行任何解释、安慰或闲聊。
+
+            </Important>
+
                 </Instructions>
 
                 <Example>
@@ -445,613 +561,11 @@ workflow:
       height: 88
       id: '1771965837737'
       position:
-        x: 1066
-        y: 55
+        x: 1408
+        y: 223
       positionAbsolute:
-        x: 1066
-        y: 55
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 242
-    - data:
-        is_team_authorization: false
-        paramSchemas:
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: which dataset you want to add to
-            ja_JP: 追加先のデータセット
-            pt_BR: which dataset you want to add to
-            zh_Hans: 你想要添加到哪个数据集
-          label:
-            en_US: Dataset ID
-            ja_JP: データセットID
-            pt_BR: Dataset ID
-            zh_Hans: 数据集 ID
-          llm_description: which dataset you want to add to
-          max: null
-          min: null
-          name: dataset_id
-          options: []
-          placeholder: null
-          precision: null
-          required: true
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: existing document identifier to update directly; the tool validates
-              it before sending the request
-            ja_JP: 既存ドキュメントを直接更新するためのID。リクエスト前に存在確認を行います
-            pt_BR: existing document identifier to update directly; the tool validates
-              it before sending the request
-            zh_Hans: 直接更新的既有文档 ID，发送请求前会先验证是否存在
-          label:
-            en_US: Document ID
-            ja_JP: ドキュメントID
-            pt_BR: Document ID
-            zh_Hans: 文档 ID
-          llm_description: existing document identifier to update directly
-          max: null
-          min: null
-          name: document_id
-          options: []
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: document name used for UPSERT when document_id is not supplied
-            ja_JP: ドキュメントの登録・更新に利用する名称
-            pt_BR: document name used for UPSERT when document_id is not supplied
-            zh_Hans: 用于创建或更新文档的名称
-          label:
-            en_US: Document Name
-            ja_JP: ドキュメント名
-            pt_BR: Document Name
-            zh_Hans: 文档名称
-          llm_description: document name used for UPSERT when document_id is not supplied
-          max: null
-          min: null
-          name: name
-          options: []
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: the content you want to add to knowledge base
-            ja_JP: ナレッジベースへ追加したいコンテンツ
-            pt_BR: the content you want to add to knowledge base
-            zh_Hans: 你想要添加到知识库的内容
-          label:
-            en_US: Content
-            ja_JP: コンテンツ
-            pt_BR: Content
-            zh_Hans: 内容
-          llm_description: the content you want to add to knowledge base
-          max: null
-          min: null
-          name: text
-          options: []
-          placeholder: null
-          precision: null
-          required: true
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: high_quality
-          form: form
-          human_description:
-            en_US: the indexing technique you want to use
-            ja_JP: 使用したいインデックス方式
-            pt_BR: the indexing technique you want to use
-            zh_Hans: 你想要使用的索引方式
-          label:
-            en_US: Index Method
-            ja_JP: インデックス方式
-            pt_BR: Index Method
-            zh_Hans: 索引方式
-          llm_description: ''
-          max: null
-          min: null
-          name: indexing_technique
-          options:
-          - icon: ''
-            label:
-              en_US: High Quality
-              ja_JP: 高品質
-              pt_BR: High Quality
-              zh_Hans: 高质量
-            value: high_quality
-          - icon: ''
-            label:
-              en_US: Economy
-              ja_JP: エコノミー
-              pt_BR: Economy
-              zh_Hans: 经济
-            value: economy
-          placeholder: null
-          precision: null
-          required: true
-          scope: null
-          template: null
-          type: select
-        - auto_generate: null
-          default: null
-          form: form
-          human_description:
-            en_US: the chunk settings
-            ja_JP: チャンク設定
-            pt_BR: the chunk settings
-            zh_Hans: 分段方式
-          label:
-            en_US: Chunk Method
-            ja_JP: チャンク方式
-            pt_BR: Chunk Method
-            zh_Hans: 分段方式
-          llm_description: ''
-          max: null
-          min: null
-          name: doc_form
-          options:
-          - icon: ''
-            label:
-              en_US: General
-              ja_JP: 一般
-              pt_BR: General
-              zh_Hans: 通用
-            value: text_model
-          - icon: ''
-            label:
-              en_US: Parent-child
-              ja_JP: 親子分割
-              pt_BR: Parent-child
-              zh_Hans: 父子分段
-            value: hierarchical_model
-          - icon: ''
-            label:
-              en_US: Q&A
-              ja_JP: Q&A分割
-              pt_BR: Q&A
-              zh_Hans: Q&A分段
-            value: qa_model
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: select
-        - auto_generate: null
-          default: null
-          form: form
-          human_description:
-            en_US: only for Q&A Chunk Method
-            ja_JP: Q&Aチャンク方式でのみ利用
-            pt_BR: only for Q&A Chunk Method
-            zh_Hans: 仅适用于 Q&A 分段方式
-          label:
-            en_US: Document Language
-            ja_JP: ドキュメントの言語
-            pt_BR: Document Language
-            zh_Hans: 文档语言
-          llm_description: ''
-          max: null
-          min: null
-          name: doc_language
-          options:
-          - icon: ''
-            label:
-              en_US: English
-              ja_JP: 英語
-              pt_BR: English
-              zh_Hans: 英语
-            value: English
-          - icon: ''
-            label:
-              en_US: Japanese
-              ja_JP: 日本語
-              pt_BR: Japanese
-              zh_Hans: 日语
-            value: Japanese
-          - icon: ''
-            label:
-              en_US: Chinese
-              ja_JP: 中国語
-              pt_BR: Chinese
-              zh_Hans: 中文
-            value: Chinese
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: select
-        - auto_generate: null
-          default: '{"mode": "automatic"}'
-          form: form
-          human_description:
-            en_US: 'Must be a valid JSON string, See plugin detail page for more details
-
-              '
-            ja_JP: '有効なJSON文字列を指定してください。詳細はプラグイン詳細ページを参照してください。
-
-              '
-            pt_BR: 'Must be a valid JSON string, See plugin detail page for more details
-
-              '
-            zh_Hans: '必须是一个有效的 JSON 字符串，请参考插件详情页获取更多信息
-
-              '
-          label:
-            en_US: Process Rule
-            ja_JP: 処理ルール
-            pt_BR: Process Rule
-            zh_Hans: 处理规则
-          llm_description: ''
-          max: null
-          min: null
-          name: process_rule
-          options: []
-          placeholder: null
-          precision: null
-          required: true
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: null
-          form: form
-          human_description:
-            en_US: Optional per-tool timeout; falls back to the provider setting when
-              omitted
-            ja_JP: ツール単位の任意タイムアウト。未指定時はプロバイダー設定を使用します
-            pt_BR: Optional per-tool timeout; falls back to the provider setting when
-              omitted
-            zh_Hans: 工具级别的可选超时时间；留空时使用提供者设置
-          label:
-            en_US: Timeout (seconds)
-            ja_JP: タイムアウト（秒）
-            pt_BR: Timeout (seconds)
-            zh_Hans: 超时时间（秒）
-          llm_description: ''
-          max: null
-          min: null
-          name: timeout_seconds
-          options: []
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: number
-        - auto_generate: null
-          default: null
-          form: form
-          human_description:
-            en_US: Optional retries for network errors and 5xx responses; defaults
-              to provider setting
-            ja_JP: ネットワークエラーや5xx応答に対する任意の再試行回数。未指定時はプロバイダー設定を利用します
-            pt_BR: Optional retries for network errors and 5xx responses; defaults
-              to provider setting
-            zh_Hans: 针对网络错误和 5xx 响应的可选重试次数；默认为提供者设置
-          label:
-            en_US: Retry Attempts
-            ja_JP: 再試行回数
-            pt_BR: Retry Attempts
-            zh_Hans: 重试次数
-          llm_description: ''
-          max: null
-          min: null
-          name: retry_attempts
-          options: []
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: number
-        params:
-          dataset_id: ''
-          doc_form: ''
-          doc_language: ''
-          document_id: ''
-          indexing_technique: ''
-          name: ''
-          process_rule: ''
-          retry_attempts: ''
-          text: ''
-          timeout_seconds: ''
-        plugin_id: r3-yamauchi/knowledgebase_update
-        plugin_unique_identifier: r3-yamauchi/knowledgebase_update:0.0.1@cd115deb1817e8d89d605cfb1a1d3fd4f96c0f4fb767cddb7948ab4ea0a0e35d
-        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=3da762ab72ff7f69420b7edfc4a788f9c848155ff158fa12a86c564e93ee2b68.svg
-        provider_id: r3-yamauchi/knowledgebase_update/knowledgebase_update
-        provider_name: r3-yamauchi/knowledgebase_update/knowledgebase_update
-        provider_type: builtin
-        selected: false
-        title: 更新文档
-        tool_configurations:
-          doc_form:
-            type: constant
-            value: text_model
-          doc_language:
-            type: constant
-            value: null
-          indexing_technique:
-            type: constant
-            value: high_quality
-          process_rule:
-            type: mixed
-            value: '{"mode": "automatic"}'
-          retry_attempts:
-            type: constant
-            value: null
-          timeout_seconds:
-            type: constant
-            value: null
-        tool_description: 使用原始文本在知识库中创建或更新文档
-        tool_label: 更新文档
-        tool_name: update
-        tool_node_version: '2'
-        tool_parameters:
-          dataset_id:
-            type: mixed
-            value: 510fc8cb-47a1-4491-812d-bc000516d747
-          document_id:
-            type: mixed
-            value: ''
-          name:
-            type: mixed
-            value: '{{#1771971947820.text#}}_{{#sys.conversation_id#}}_{{#sys.dialogue_count#}}'
-          text:
-            type: mixed
-            value: '{
-
-              "quest":"{{#sys.query#}}"
-
-              "answer":"{{#llm.text#}}"
-
-              }'
-        type: tool
-      height: 218
-      id: '1771968611938'
-      position:
-        x: 2474
-        y: 148
-      positionAbsolute:
-        x: 2474
-        y: 148
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 242
-    - data:
-        is_team_authorization: true
-        paramSchemas:
-        - auto_generate: null
-          default: '%Y-%m-%d %H:%M:%S'
-          form: form
-          human_description:
-            en_US: Time format in strftime standard.
-            ja_JP: Time format in strftime standard.
-            pt_BR: Time format in strftime standard.
-            zh_Hans: strftime 标准的时间格式。
-          label:
-            en_US: Format
-            ja_JP: Format
-            pt_BR: Format
-            zh_Hans: 格式
-          llm_description: null
-          max: null
-          min: null
-          name: format
-          options: []
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: UTC
-          form: form
-          human_description:
-            en_US: Timezone
-            ja_JP: Timezone
-            pt_BR: Timezone
-            zh_Hans: 时区
-          label:
-            en_US: Timezone
-            ja_JP: Timezone
-            pt_BR: Timezone
-            zh_Hans: 时区
-          llm_description: null
-          max: null
-          min: null
-          name: timezone
-          options:
-          - icon: null
-            label:
-              en_US: UTC
-              ja_JP: UTC
-              pt_BR: UTC
-              zh_Hans: UTC
-            value: UTC
-          - icon: null
-            label:
-              en_US: America/New_York
-              ja_JP: America/New_York
-              pt_BR: America/New_York
-              zh_Hans: 美洲/纽约
-            value: America/New_York
-          - icon: null
-            label:
-              en_US: America/Los_Angeles
-              ja_JP: America/Los_Angeles
-              pt_BR: America/Los_Angeles
-              zh_Hans: 美洲/洛杉矶
-            value: America/Los_Angeles
-          - icon: null
-            label:
-              en_US: America/Chicago
-              ja_JP: America/Chicago
-              pt_BR: America/Chicago
-              zh_Hans: 美洲/芝加哥
-            value: America/Chicago
-          - icon: null
-            label:
-              en_US: America/Sao_Paulo
-              ja_JP: America/Sao_Paulo
-              pt_BR: América/São Paulo
-              zh_Hans: 美洲/圣保罗
-            value: America/Sao_Paulo
-          - icon: null
-            label:
-              en_US: Asia/Shanghai
-              ja_JP: Asia/Shanghai
-              pt_BR: Asia/Shanghai
-              zh_Hans: 亚洲/上海
-            value: Asia/Shanghai
-          - icon: null
-            label:
-              en_US: Asia/Ho_Chi_Minh
-              ja_JP: Asia/Ho_Chi_Minh
-              pt_BR: Ásia/Ho Chi Minh
-              zh_Hans: 亚洲/胡志明市
-            value: Asia/Ho_Chi_Minh
-          - icon: null
-            label:
-              en_US: Asia/Tokyo
-              ja_JP: Asia/Tokyo
-              pt_BR: Asia/Tokyo
-              zh_Hans: 亚洲/东京
-            value: Asia/Tokyo
-          - icon: null
-            label:
-              en_US: Asia/Dubai
-              ja_JP: Asia/Dubai
-              pt_BR: Asia/Dubai
-              zh_Hans: 亚洲/迪拜
-            value: Asia/Dubai
-          - icon: null
-            label:
-              en_US: Asia/Kolkata
-              ja_JP: Asia/Kolkata
-              pt_BR: Asia/Kolkata
-              zh_Hans: 亚洲/加尔各答
-            value: Asia/Kolkata
-          - icon: null
-            label:
-              en_US: Asia/Seoul
-              ja_JP: Asia/Seoul
-              pt_BR: Asia/Seoul
-              zh_Hans: 亚洲/首尔
-            value: Asia/Seoul
-          - icon: null
-            label:
-              en_US: Asia/Singapore
-              ja_JP: Asia/Singapore
-              pt_BR: Asia/Singapore
-              zh_Hans: 亚洲/新加坡
-            value: Asia/Singapore
-          - icon: null
-            label:
-              en_US: Europe/London
-              ja_JP: Europe/London
-              pt_BR: Europe/London
-              zh_Hans: 欧洲/伦敦
-            value: Europe/London
-          - icon: null
-            label:
-              en_US: Europe/Berlin
-              ja_JP: Europe/Berlin
-              pt_BR: Europe/Berlin
-              zh_Hans: 欧洲/柏林
-            value: Europe/Berlin
-          - icon: null
-            label:
-              en_US: Europe/Moscow
-              ja_JP: Europe/Moscow
-              pt_BR: Europe/Moscow
-              zh_Hans: 欧洲/莫斯科
-            value: Europe/Moscow
-          - icon: null
-            label:
-              en_US: Australia/Sydney
-              ja_JP: Australia/Sydney
-              pt_BR: Australia/Sydney
-              zh_Hans: 澳大利亚/悉尼
-            value: Australia/Sydney
-          - icon: null
-            label:
-              en_US: Pacific/Auckland
-              ja_JP: Pacific/Auckland
-              pt_BR: Pacific/Auckland
-              zh_Hans: 太平洋/奥克兰
-            value: Pacific/Auckland
-          - icon: null
-            label:
-              en_US: Africa/Cairo
-              ja_JP: Africa/Cairo
-              pt_BR: Africa/Cairo
-              zh_Hans: 非洲/开罗
-            value: Africa/Cairo
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: select
-        params:
-          format: ''
-          timezone: ''
-        plugin_id: null
-        plugin_unique_identifier: ''
-        provider_icon: /console/api/workspaces/current/tool-provider/builtin/time/icon
-        provider_id: time
-        provider_name: time
-        provider_type: builtin
-        selected: false
-        title: 获取日期
-        tool_configurations:
-          format:
-            type: mixed
-            value: '%Y-%m-%d'
-          timezone:
-            type: constant
-            value: Asia/Shanghai
-        tool_description: 一个用于获取当前时间的工具。
-        tool_label: 获取当前时间
-        tool_name: current_time
-        tool_node_version: '2'
-        tool_parameters: {}
-        type: tool
-      height: 114
-      id: '1771971947820'
-      position:
-        x: 2132
-        y: 200
-      positionAbsolute:
-        x: 2132
-        y: 200
+        x: 1408
+        y: 223
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1076,11 +590,11 @@ workflow:
       height: 124
       id: '1771975195871'
       position:
-        x: 342
-        y: 12
+        x: 684
+        y: 403
       positionAbsolute:
-        x: 342
-        y: 12
+        x: 684
+        y: 403
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1290,33 +804,178 @@ workflow:
       height: 114
       id: '17719753982140'
       position:
-        x: 704
-        y: 275
+        x: 342
+        y: 408
       positionAbsolute:
-        x: 704
-        y: 275
+        x: 342
+        y: 408
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     - data:
-        is_team_authorization: true
+        author: eanrach
+        desc: ''
+        height: 247
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"添加上传的文档到知识库","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 976
+      height: 247
+      id: '1771975697359'
+      position:
+        x: 1018.5570984536205
+        y: 379.8272224787674
+      positionAbsolute:
+        x: 1018.5570984536205
+        y: 379.8272224787674
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 976
+    - data:
+        author: eanrach
+        desc: ''
+        height: 313
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"总结最近10轮对话的信息","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"对历史对话和上传的文件进行检索","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"listitem","version":1,"value":2}],"direction":null,"format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 1358
+      height: 313
+      id: '1771975737308'
+      position:
+        x: 1018.5570984536205
+        y: 44.16217252632124
+      positionAbsolute:
+        x: 1018.5570984536205
+        y: 44.16217252632124
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 1358
+    - data:
+        author: eanrach
+        desc: ''
+        height: 632
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"本轮对话存入知识库","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"如果知识库中没有文档存储该会话则创建文档","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"如果已有文档存储该会话则获取文档ID直接添加分块","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 2076
+      height: 632
+      id: '1771975782034'
+      position:
+        x: 2795.2708467094453
+        y: -37.13174506372684
+      positionAbsolute:
+        x: 2795.2708467094453
+        y: -37.13174506372684
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 2076
+    - data:
+        author: eanrach
+        desc: ''
+        height: 136
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"默认记忆窗口为50轮对话","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 280
+      height: 136
+      id: '1771975839049'
+      position:
+        x: 2441.2745573285465
+        y: 193
+      positionAbsolute:
+        x: 2441.2745573285465
+        y: 193
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 280
+    - data:
+        code: "\ndef main(quest: str, answer: str, chat_log: str,dialogue_count: int):\n\
+          \    dialogue_count = str(dialogue_count)\n    dict = {\"dialogue_count\"\
+          : dialogue_count, \"quest\": quest, \"answer\": answer}\n    result = str(dict)\
+          \ + \",\\n\\n\" \n    return {\n        \"result\": result,\n    }\n"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 聊天日志格式化
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: quest
+        - value_selector:
+          - llm
+          - text
+          value_type: string
+          variable: answer
+        - value_selector:
+          - conversation
+          - chat_log
+          value_type: string
+          variable: chat_log
+        - value_selector:
+          - sys
+          - dialogue_count
+          value_type: number
+          variable: dialogue_count
+      height: 52
+      id: '1771991105446'
+      position:
+        x: 3158
+        y: 235
+      positionAbsolute:
+        x: 3158
+        y: 235
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: false
         paramSchemas:
         - auto_generate: null
           default: null
           form: llm
           human_description:
-            en_US: which dataset you want to add to
+            en_US: Which dataset you want to add to
             ja_JP: 追加先のデータセット
-            pt_BR: which dataset you want to add to
+            pt_BR: Qual dataset você deseja adicionar
             zh_Hans: 你想要添加到哪个数据集
           label:
             en_US: Dataset ID
             ja_JP: データセットID
-            pt_BR: Dataset ID
-            zh_Hans: 数据集 ID
-          llm_description: which dataset you want to add to
+            pt_BR: ID do Dataset
+            zh_Hans: 数据集ID
+          llm_description: The unique identifier (ID) of the dataset where the document
+            will be created or updated. Use list_datasets to get available dataset
+            IDs.
           max: null
           min: null
           name: dataset_id
@@ -1331,52 +990,27 @@ workflow:
           default: null
           form: llm
           human_description:
-            en_US: existing document identifier to update directly; the tool validates
-              it before sending the request
-            ja_JP: 既存ドキュメントを直接更新するためのID。リクエスト前に存在確認を行います
-            pt_BR: existing document identifier to update directly; the tool validates
-              it before sending the request
-            zh_Hans: 直接更新的既有文档 ID，发送请求前会先验证是否存在
-          label:
-            en_US: Document ID
-            ja_JP: ドキュメントID
-            pt_BR: Document ID
-            zh_Hans: 文档 ID
-          llm_description: existing document identifier to update directly
-          max: null
-          min: null
-          name: document_id
-          options: []
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: Document name applied when creating or updating; falls back to
-              the uploaded filename when omitted
-            ja_JP: ドキュメントの登録・更新に利用する名称。省略時はアップロードファイル名を自動使用します
-            pt_BR: Document name applied when creating or updating; falls back to
-              the uploaded filename when omitted
-            zh_Hans: 在创建或更新时使用的文档名称；若省略则自动使用上传文件名
+            en_US: The name of the document. If a document with this name exists,
+              it will be updated.
+            ja_JP: ドキュメントの名称。同名のドキュメントが存在する場合は更新されます。
+            pt_BR: O nome do documento. Se um documento com este nome existir, ele
+              será atualizado.
+            zh_Hans: 文档的名称。如果存在同名文档，将会更新它。
           label:
             en_US: Document Name
             ja_JP: ドキュメント名
-            pt_BR: Document Name
+            pt_BR: Nome do Documento
             zh_Hans: 文档名称
-          llm_description: document name used for UPSERT when document_id is not provided;
-            falls back to the uploaded filename when omitted
+          llm_description: The name of the document. If a document with this exact
+            name already exists in the dataset, it will be updated instead of creating
+            a new one.
           max: null
           min: null
           name: name
           options: []
           placeholder: null
           precision: null
-          required: false
+          required: true
           scope: null
           template: null
           type: string
@@ -1384,38 +1018,39 @@ workflow:
           default: null
           form: llm
           human_description:
-            en_US: the file you want to upload to the knowledge base
-            ja_JP: ナレッジベースへ登録したいファイル
-            pt_BR: the file you want to upload to the knowledge base
-            zh_Hans: 你想要上传到知识库的文件
+            en_US: The content you want to add to knowledge base
+            ja_JP: ナレッジベースへ追加したいコンテンツ
+            pt_BR: O conteúdo que você deseja adicionar à base de conhecimento
+            zh_Hans: 你想要添加到知识库的内容
           label:
-            en_US: File
-            ja_JP: ファイル
-            pt_BR: File
-            zh_Hans: 文件
-          llm_description: the file you want to upload to the knowledge base
+            en_US: Content
+            ja_JP: コンテンツ
+            pt_BR: Conteúdo
+            zh_Hans: 内容
+          llm_description: The text content to be added to the document. This content
+            will be processed and indexed for retrieval.
           max: null
           min: null
-          name: file
+          name: text
           options: []
           placeholder: null
           precision: null
           required: true
           scope: null
           template: null
-          type: file
+          type: string
         - auto_generate: null
           default: high_quality
           form: form
           human_description:
-            en_US: the indexing technique you want to use
+            en_US: The indexing technique you want to use
             ja_JP: 使用したいインデックス方式
-            pt_BR: the indexing technique you want to use
+            pt_BR: A técnica de indexação que você deseja usar
             zh_Hans: 你想要使用的索引方式
           label:
             en_US: Index Method
             ja_JP: インデックス方式
-            pt_BR: Index Method
+            pt_BR: Método de Indexação
             zh_Hans: 索引方式
           llm_description: ''
           max: null
@@ -1426,14 +1061,14 @@ workflow:
             label:
               en_US: High Quality
               ja_JP: 高品質
-              pt_BR: High Quality
+              pt_BR: Alta Qualidade
               zh_Hans: 高质量
             value: high_quality
           - icon: ''
             label:
               en_US: Economy
               ja_JP: エコノミー
-              pt_BR: Economy
+              pt_BR: Economia
               zh_Hans: 经济
             value: economy
           placeholder: null
@@ -1446,14 +1081,14 @@ workflow:
           default: null
           form: form
           human_description:
-            en_US: the chunk settings
-            ja_JP: チャンク設定
-            pt_BR: the chunk settings
-            zh_Hans: 分段方式
+            en_US: The chunk settings for document segmentation
+            ja_JP: ドキュメント分割のチャンク設定
+            pt_BR: Configurações de chunk para segmentação de documentos
+            zh_Hans: 分段方式设置
           label:
             en_US: Chunk Method
             ja_JP: チャンク方式
-            pt_BR: Chunk Method
+            pt_BR: Método de Chunk
             zh_Hans: 分段方式
           llm_description: ''
           max: null
@@ -1464,14 +1099,14 @@ workflow:
             label:
               en_US: General
               ja_JP: 一般
-              pt_BR: General
+              pt_BR: Geral
               zh_Hans: 通用
             value: text_model
           - icon: ''
             label:
               en_US: Parent-child
               ja_JP: 親子分割
-              pt_BR: Parent-child
+              pt_BR: Pai-filho
               zh_Hans: 父子分段
             value: hierarchical_model
           - icon: ''
@@ -1483,7 +1118,7 @@ workflow:
             value: qa_model
           placeholder: null
           precision: null
-          required: false
+          required: true
           scope: null
           template: null
           type: select
@@ -1491,14 +1126,14 @@ workflow:
           default: null
           form: form
           human_description:
-            en_US: only for Q&A Chunk Method
-            ja_JP: Q&Aチャンク方式でのみ利用
-            pt_BR: only for Q&A Chunk Method
-            zh_Hans: 仅适用于 Q&A 分段方式
+            en_US: Document language, only for Q&A Chunk Method
+            ja_JP: ドキュメントの言語、Q&Aチャンク方式でのみ利用
+            pt_BR: Idioma do documento, apenas para Método de Chunk Q&A
+            zh_Hans: 文档语言，仅适用于 Q&A 分段方式
           label:
             en_US: Document Language
             ja_JP: ドキュメントの言語
-            pt_BR: Document Language
+            pt_BR: Idioma do Documento
             zh_Hans: 文档语言
           llm_description: ''
           max: null
@@ -1509,23 +1144,37 @@ workflow:
             label:
               en_US: English
               ja_JP: 英語
-              pt_BR: English
+              pt_BR: Inglês
               zh_Hans: 英语
             value: English
           - icon: ''
             label:
+              en_US: Chinese
+              ja_JP: 中国語
+              pt_BR: Chinês
+              zh_Hans: 中文
+            value: Chinese
+          - icon: ''
+            label:
               en_US: Japanese
               ja_JP: 日本語
-              pt_BR: Japanese
+              pt_BR: Japonês
               zh_Hans: 日语
             value: Japanese
           - icon: ''
             label:
-              en_US: Chinese
-              ja_JP: 中国語
-              pt_BR: Chinese
-              zh_Hans: 中文
-            value: Chinese
+              en_US: Korean
+              ja_JP: 韓国語
+              pt_BR: Coreano
+              zh_Hans: 韩语
+            value: Korean
+          - icon: ''
+            label:
+              en_US: Indonesian
+              ja_JP: インドネシア語
+              pt_BR: Indonésio
+              zh_Hans: 印尼语
+            value: Indonesian
           placeholder: null
           precision: null
           required: false
@@ -1536,22 +1185,43 @@ workflow:
           default: '{"mode": "automatic"}'
           form: form
           human_description:
-            en_US: 'Must be a valid JSON string, See plugin detail page for more details
+            en_US: 'Must be a valid JSON string. Examples:
+
+              Automatic: {"mode": "automatic"}
+
+              Custom: {"mode": "custom", "rules": {"pre_processing_rules": [{"id":
+              "remove_extra_spaces", "enabled": true}, {"id": "remove_urls_emails",
+              "enabled": false}], "segmentation": {"separator": "###", "max_tokens":
+              1000, "chunk_overlap": 50}}}
 
               '
-            ja_JP: '有効なJSON文字列を指定してください。詳細はプラグイン詳細ページを参照してください。
+            ja_JP: '有効なJSON文字列を指定してください。例：
+
+              自動: {"mode": "automatic"}
+
+              カスタム: {"mode": "custom", "rules": {...}}
 
               '
-            pt_BR: 'Must be a valid JSON string, See plugin detail page for more details
+            pt_BR: 'Deve ser uma string JSON válida. Exemplos:
+
+              Automático: {"mode": "automatic"}
+
+              Personalizado: {"mode": "custom", "rules": {...}}
 
               '
-            zh_Hans: '必须是一个有效的 JSON 字符串，请参考插件详情页获取更多信息
+            zh_Hans: '必须是一个有效的 JSON 字符串。示例：
+
+              自动: {"mode": "automatic"}
+
+              自定义: {"mode": "custom", "rules": {"pre_processing_rules": [{"id": "remove_extra_spaces",
+              "enabled": true}, {"id": "remove_urls_emails", "enabled": false}], "segmentation":
+              {"separator": "###", "max_tokens": 1000, "chunk_overlap": 50}}}
 
               '
           label:
             en_US: Process Rule
             ja_JP: 処理ルール
-            pt_BR: Process Rule
+            pt_BR: Regra de Processamento
             zh_Hans: 处理规则
           llm_description: ''
           max: null
@@ -1568,73 +1238,56 @@ workflow:
           default: null
           form: form
           human_description:
-            en_US: Optional per-tool timeout; falls back to the provider value when
-              blank
-            ja_JP: ツールごとの任意タイムアウト。未指定時はプロバイダー設定を使用します
-            pt_BR: Optional per-tool timeout; falls back to the provider value when
-              blank
-            zh_Hans: 工具级别的可选超时时间；留空时使用提供者设置
+            en_US: 'Optional metadata to assign to the document as JSON. Format: [{"id":
+              "metadata_field_id", "name": "field_name", "value": "field_value"}]
+
+              '
+            ja_JP: 'ドキュメントに割り当てるオプションのメタデータ（JSON形式）。形式: [{"id": "...", "name": "...",
+              "value": "..."}]
+
+              '
+            pt_BR: 'Metadados opcionais para atribuir ao documento como JSON. Formato:
+              [{"id": "...", "name": "...", "value": "..."}]
+
+              '
+            zh_Hans: '可选的文档元数据，JSON格式。格式: [{"id": "metadata_field_id", "name": "field_name",
+              "value": "field_value"}]
+
+              '
           label:
-            en_US: Timeout (seconds)
-            ja_JP: タイムアウト（秒）
-            pt_BR: Timeout (seconds)
-            zh_Hans: 超时时间（秒）
-          llm_description: ''
+            en_US: Metadata (JSON)
+            ja_JP: メタデータ (JSON)
+            pt_BR: Metadados (JSON)
+            zh_Hans: 元数据 (JSON)
+          llm_description: Optional metadata to assign to the document. Provide as
+            JSON array of objects with id, name, and value fields.
           max: null
           min: null
-          name: timeout_seconds
+          name: metadata_json
           options: []
           placeholder: null
           precision: null
           required: false
           scope: null
           template: null
-          type: number
-        - auto_generate: null
-          default: null
-          form: form
-          human_description:
-            en_US: Optional retries for network errors or 5xx responses; defaults
-              to provider
-            ja_JP: ネットワークエラーや 5xx 応答に対する任意の再試行回数。未指定時はプロバイダー設定が適用されます
-            pt_BR: Optional retries for network errors or 5xx responses; defaults
-              to provider
-            zh_Hans: 针对网络错误或 5xx 响应的可选重试次数；默认为提供者设置
-          label:
-            en_US: Retry Attempts
-            ja_JP: 再試行回数
-            pt_BR: Retry Attempts
-            zh_Hans: 重试次数
-          llm_description: ''
-          max: null
-          min: null
-          name: retry_attempts
-          options: []
-          placeholder: null
-          precision: null
-          required: false
-          scope: null
-          template: null
-          type: number
+          type: string
         params:
           dataset_id: ''
           doc_form: ''
           doc_language: ''
-          document_id: ''
-          file: ''
           indexing_technique: ''
+          metadata_json: ''
           name: ''
           process_rule: ''
-          retry_attempts: ''
-          timeout_seconds: ''
-        plugin_id: r3-yamauchi/knowledgebase_update
-        plugin_unique_identifier: r3-yamauchi/knowledgebase_update:0.0.1@cd115deb1817e8d89d605cfb1a1d3fd4f96c0f4fb767cddb7948ab4ea0a0e35d
-        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=3da762ab72ff7f69420b7edfc4a788f9c848155ff158fa12a86c564e93ee2b68.svg
-        provider_id: r3-yamauchi/knowledgebase_update/knowledgebase_update
-        provider_name: r3-yamauchi/knowledgebase_update/knowledgebase_update
+          text: ''
+        plugin_id: abesticode/knowledge_pro
+        plugin_unique_identifier: abesticode/knowledge_pro:0.0.6@73873eda46ee70c8d528c409381f705f24206d34f913ac4bfee35812c6d4a6e2
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=e03596d3ccb1a28aeb72d3a84a13f70eecc17a0e56fdb7e99bdb362c1508dad3.svg
+        provider_id: abesticode/knowledge_pro/knowledge_pro
+        provider_name: abesticode/knowledge_pro/knowledge_pro
         provider_type: builtin
         selected: false
-        title: 上传文档
+        title: 创建/更新文档
         tool_configurations:
           doc_form:
             type: constant
@@ -1645,146 +1298,939 @@ workflow:
           indexing_technique:
             type: constant
             value: high_quality
+          metadata_json:
+            type: mixed
+            value: null
           process_rule:
             type: mixed
             value: '{"mode": "automatic"}'
-          retry_attempts:
-            type: constant
-            value: null
-          timeout_seconds:
-            type: constant
-            value: null
-        tool_description: 将文件上传到知识库，如果存在同名文档则会覆盖更新
-        tool_label: 上传文档
-        tool_name: upload
+        tool_description: 在Dify知识库中创建新文档或按名称更新现有文档
+        tool_label: 创建/更新文档
+        tool_name: create_document_by_text
         tool_node_version: '2'
         tool_parameters:
           dataset_id:
             type: mixed
             value: 510fc8cb-47a1-4491-812d-bc000516d747
-          document_id:
-            type: mixed
-            value: null
-          file:
-            type: variable
-            value:
-            - sys
-            - files
           name:
             type: mixed
             value: '{{#17719753982140.text#}}_{{#sys.conversation_id#}}_{{#sys.dialogue_count#}}_files'
+          text:
+            type: mixed
+            value: '{{#1772020520115.result#}}'
         type: tool
-      height: 218
-      id: '17719753982141'
+      height: 192
+      id: '1772020155108'
       position:
-        x: 1046
-        y: 223
+        x: 1730
+        y: 413
       positionAbsolute:
-        x: 1046
-        y: 223
+        x: 1730
+        y: 413
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 242
     - data:
-        author: eanrach
-        desc: ''
-        height: 280
+        is_array_file: true
         selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"添加上传的文档到知识库","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
-        theme: blue
-        title: ''
-        type: ''
-        width: 614
-      height: 280
-      id: '1771975697359'
-      position:
-        x: 704
-        y: 188.02867016475318
-      positionAbsolute:
-        x: 704
-        y: 188.02867016475318
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom-note
-      width: 614
-    - data:
-        author: eanrach
-        desc: ''
-        height: 177
-        selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"总结最近10轮对话的信息","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"对历史对话和上传的文件进行检索","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"listitem","version":1,"value":2}],"direction":null,"format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
-        theme: blue
-        title: ''
-        type: ''
-        width: 634
-      height: 177
-      id: '1771975737308'
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - sys
+        - files
+      height: 104
+      id: '1772020462158'
       position:
         x: 1046
-        y: -7.616871630643672
+        y: 457
       positionAbsolute:
         x: 1046
-        y: -7.616871630643672
+        y: 457
       selected: false
       sourcePosition: right
       targetPosition: left
-      type: custom-note
-      width: 634
+      type: custom
+      width: 242
     - data:
-        author: eanrach
-        desc: ''
-        height: 280
+        code: "\ndef main(arg1: str):\n    return {\n        \"result\": str(arg1),\n\
+          \    }\n"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: string
         selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"本轮对话存入知识库","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
-        theme: blue
-        title: ''
-        type: ''
-        width: 678
-      height: 280
-      id: '1771975782034'
+        title: 文档内容转字符串
+        type: code
+        variables:
+        - value_selector:
+          - '1772020462158'
+          - text
+          value_type: array[string]
+          variable: arg1
+      height: 52
+      id: '1772020520115'
       position:
-        x: 2122.1343824528203
-        y: 109
+        x: 1388
+        y: 483
       positionAbsolute:
-        x: 2122.1343824528203
-        y: 109
+        x: 1388
+        y: 483
       selected: false
       sourcePosition: right
       targetPosition: left
-      type: custom-note
-      width: 678
+      type: custom
+      width: 242
     - data:
-        author: eanrach
-        desc: ''
-        height: 88
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The ID of the dataset to list documents from
+            ja_JP: ドキュメントを一覧表示するデータセットのID
+            pt_BR: O ID do dataset para listar documentos
+            zh_Hans: 要列出文档的数据集ID
+          label:
+            en_US: Dataset ID
+            ja_JP: データセットID
+            pt_BR: ID do Dataset
+            zh_Hans: 数据集ID
+          llm_description: The unique identifier (ID) of the dataset to list documents
+            from. Use list_datasets to get available dataset IDs.
+          max: null
+          min: null
+          name: dataset_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Optional keyword to search/filter documents by name
+            ja_JP: 名前でドキュメントを検索/フィルタリングするオプションのキーワード
+            pt_BR: Palavra-chave opcional para buscar/filtrar documentos por nome
+            zh_Hans: 可选的关键词，用于按名称搜索/筛选文档
+          label:
+            en_US: Search Keyword
+            ja_JP: 検索キーワード
+            pt_BR: Palavra-chave de Busca
+            zh_Hans: 搜索关键词
+          llm_description: Optional search keyword to filter documents by name. Leave
+            empty to list all documents.
+          max: null
+          min: null
+          name: keyword
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 1
+          form: form
+          human_description:
+            en_US: The page number for pagination (default 1)
+            ja_JP: ページネーションのページ番号（デフォルト1）
+            pt_BR: O número da página para paginação (padrão 1)
+            zh_Hans: 分页的页码（默认1）
+          label:
+            en_US: Page Number
+            ja_JP: ページ番号
+            pt_BR: Número da Página
+            zh_Hans: 页码
+          llm_description: The page number for pagination, starting from 1. Default
+            is 1.
+          max: null
+          min: null
+          name: page
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: 20
+          form: form
+          human_description:
+            en_US: Number of documents to return per page (default 20)
+            ja_JP: 1ページあたりに返すドキュメント数（デフォルト20）
+            pt_BR: Número de documentos a retornar por página (padrão 20)
+            zh_Hans: 每页返回的文档数量（默认20）
+          label:
+            en_US: Items Per Page
+            ja_JP: ページあたりの件数
+            pt_BR: Itens Por Página
+            zh_Hans: 每页条数
+          llm_description: Number of documents to return per page. Default is 20.
+          max: null
+          min: null
+          name: limit
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        params:
+          dataset_id: ''
+          keyword: ''
+          limit: ''
+          page: ''
+        plugin_id: abesticode/knowledge_pro
+        plugin_unique_identifier: abesticode/knowledge_pro:0.0.6@73873eda46ee70c8d528c409381f705f24206d34f913ac4bfee35812c6d4a6e2
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=e03596d3ccb1a28aeb72d3a84a13f70eecc17a0e56fdb7e99bdb362c1508dad3.svg
+        provider_id: abesticode/knowledge_pro/knowledge_pro
+        provider_name: abesticode/knowledge_pro/knowledge_pro
+        provider_type: builtin
         selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"默认记忆窗口为50轮对话","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
-        theme: blue
-        title: ''
-        type: ''
-        width: 240
-      height: 88
-      id: '1771975839049'
+        title: 列出文档
+        tool_configurations:
+          limit:
+            type: constant
+            value: 20
+          page:
+            type: constant
+            value: 1
+        tool_description: 获取Dify知识库中的文档列表，支持关键词搜索
+        tool_label: 列出文档
+        tool_name: list_documents
+        tool_node_version: '2'
+        tool_parameters:
+          dataset_id:
+            type: mixed
+            value: 510fc8cb-47a1-4491-812d-bc000516d747
+          keyword:
+            type: mixed
+            value: '{{#sys.conversation_id#}}'
+        type: tool
+      height: 114
+      id: '1772020808347'
       position:
-        x: 1760.0000000000002
-        y: -7.616871630643672
+        x: 2816
+        y: 204
       positionAbsolute:
-        x: 1760.0000000000002
-        y: -7.616871630643672
+        x: 2816
+        y: 204
       selected: false
       sourcePosition: right
       targetPosition: left
-      type: custom-note
-      width: 240
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: f6264dde-6c6f-463c-a649-b53e52f0e979
+            value: No documents found matching
+            varType: string
+            variable_selector:
+            - '1772020808347'
+            - text
+          id: 'true'
+          logical_operator: and
+        selected: false
+        title: 条件分支 4
+        type: if-else
+      height: 124
+      id: '1772020965396'
+      position:
+        x: 3500
+        y: 199
+      positionAbsolute:
+        x: 3500
+        y: 199
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Which dataset you want to add to
+            ja_JP: 追加先のデータセット
+            pt_BR: Qual dataset você deseja adicionar
+            zh_Hans: 你想要添加到哪个数据集
+          label:
+            en_US: Dataset ID
+            ja_JP: データセットID
+            pt_BR: ID do Dataset
+            zh_Hans: 数据集ID
+          llm_description: The unique identifier (ID) of the dataset where the document
+            will be created or updated. Use list_datasets to get available dataset
+            IDs.
+          max: null
+          min: null
+          name: dataset_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The name of the document. If a document with this name exists,
+              it will be updated.
+            ja_JP: ドキュメントの名称。同名のドキュメントが存在する場合は更新されます。
+            pt_BR: O nome do documento. Se um documento com este nome existir, ele
+              será atualizado.
+            zh_Hans: 文档的名称。如果存在同名文档，将会更新它。
+          label:
+            en_US: Document Name
+            ja_JP: ドキュメント名
+            pt_BR: Nome do Documento
+            zh_Hans: 文档名称
+          llm_description: The name of the document. If a document with this exact
+            name already exists in the dataset, it will be updated instead of creating
+            a new one.
+          max: null
+          min: null
+          name: name
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The content you want to add to knowledge base
+            ja_JP: ナレッジベースへ追加したいコンテンツ
+            pt_BR: O conteúdo que você deseja adicionar à base de conhecimento
+            zh_Hans: 你想要添加到知识库的内容
+          label:
+            en_US: Content
+            ja_JP: コンテンツ
+            pt_BR: Conteúdo
+            zh_Hans: 内容
+          llm_description: The text content to be added to the document. This content
+            will be processed and indexed for retrieval.
+          max: null
+          min: null
+          name: text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: high_quality
+          form: form
+          human_description:
+            en_US: The indexing technique you want to use
+            ja_JP: 使用したいインデックス方式
+            pt_BR: A técnica de indexação que você deseja usar
+            zh_Hans: 你想要使用的索引方式
+          label:
+            en_US: Index Method
+            ja_JP: インデックス方式
+            pt_BR: Método de Indexação
+            zh_Hans: 索引方式
+          llm_description: ''
+          max: null
+          min: null
+          name: indexing_technique
+          options:
+          - icon: ''
+            label:
+              en_US: High Quality
+              ja_JP: 高品質
+              pt_BR: Alta Qualidade
+              zh_Hans: 高质量
+            value: high_quality
+          - icon: ''
+            label:
+              en_US: Economy
+              ja_JP: エコノミー
+              pt_BR: Economia
+              zh_Hans: 经济
+            value: economy
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: The chunk settings for document segmentation
+            ja_JP: ドキュメント分割のチャンク設定
+            pt_BR: Configurações de chunk para segmentação de documentos
+            zh_Hans: 分段方式设置
+          label:
+            en_US: Chunk Method
+            ja_JP: チャンク方式
+            pt_BR: Método de Chunk
+            zh_Hans: 分段方式
+          llm_description: ''
+          max: null
+          min: null
+          name: doc_form
+          options:
+          - icon: ''
+            label:
+              en_US: General
+              ja_JP: 一般
+              pt_BR: Geral
+              zh_Hans: 通用
+            value: text_model
+          - icon: ''
+            label:
+              en_US: Parent-child
+              ja_JP: 親子分割
+              pt_BR: Pai-filho
+              zh_Hans: 父子分段
+            value: hierarchical_model
+          - icon: ''
+            label:
+              en_US: Q&A
+              ja_JP: Q&A分割
+              pt_BR: Q&A
+              zh_Hans: Q&A分段
+            value: qa_model
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: Document language, only for Q&A Chunk Method
+            ja_JP: ドキュメントの言語、Q&Aチャンク方式でのみ利用
+            pt_BR: Idioma do documento, apenas para Método de Chunk Q&A
+            zh_Hans: 文档语言，仅适用于 Q&A 分段方式
+          label:
+            en_US: Document Language
+            ja_JP: ドキュメントの言語
+            pt_BR: Idioma do Documento
+            zh_Hans: 文档语言
+          llm_description: ''
+          max: null
+          min: null
+          name: doc_language
+          options:
+          - icon: ''
+            label:
+              en_US: English
+              ja_JP: 英語
+              pt_BR: Inglês
+              zh_Hans: 英语
+            value: English
+          - icon: ''
+            label:
+              en_US: Chinese
+              ja_JP: 中国語
+              pt_BR: Chinês
+              zh_Hans: 中文
+            value: Chinese
+          - icon: ''
+            label:
+              en_US: Japanese
+              ja_JP: 日本語
+              pt_BR: Japonês
+              zh_Hans: 日语
+            value: Japanese
+          - icon: ''
+            label:
+              en_US: Korean
+              ja_JP: 韓国語
+              pt_BR: Coreano
+              zh_Hans: 韩语
+            value: Korean
+          - icon: ''
+            label:
+              en_US: Indonesian
+              ja_JP: インドネシア語
+              pt_BR: Indonésio
+              zh_Hans: 印尼语
+            value: Indonesian
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: '{"mode": "automatic"}'
+          form: form
+          human_description:
+            en_US: 'Must be a valid JSON string. Examples:
+
+              Automatic: {"mode": "automatic"}
+
+              Custom: {"mode": "custom", "rules": {"pre_processing_rules": [{"id":
+              "remove_extra_spaces", "enabled": true}, {"id": "remove_urls_emails",
+              "enabled": false}], "segmentation": {"separator": "###", "max_tokens":
+              1000, "chunk_overlap": 50}}}
+
+              '
+            ja_JP: '有効なJSON文字列を指定してください。例：
+
+              自動: {"mode": "automatic"}
+
+              カスタム: {"mode": "custom", "rules": {...}}
+
+              '
+            pt_BR: 'Deve ser uma string JSON válida. Exemplos:
+
+              Automático: {"mode": "automatic"}
+
+              Personalizado: {"mode": "custom", "rules": {...}}
+
+              '
+            zh_Hans: '必须是一个有效的 JSON 字符串。示例：
+
+              自动: {"mode": "automatic"}
+
+              自定义: {"mode": "custom", "rules": {"pre_processing_rules": [{"id": "remove_extra_spaces",
+              "enabled": true}, {"id": "remove_urls_emails", "enabled": false}], "segmentation":
+              {"separator": "###", "max_tokens": 1000, "chunk_overlap": 50}}}
+
+              '
+          label:
+            en_US: Process Rule
+            ja_JP: 処理ルール
+            pt_BR: Regra de Processamento
+            zh_Hans: 处理规则
+          llm_description: ''
+          max: null
+          min: null
+          name: process_rule
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: form
+          human_description:
+            en_US: 'Optional metadata to assign to the document as JSON. Format: [{"id":
+              "metadata_field_id", "name": "field_name", "value": "field_value"}]
+
+              '
+            ja_JP: 'ドキュメントに割り当てるオプションのメタデータ（JSON形式）。形式: [{"id": "...", "name": "...",
+              "value": "..."}]
+
+              '
+            pt_BR: 'Metadados opcionais para atribuir ao documento como JSON. Formato:
+              [{"id": "...", "name": "...", "value": "..."}]
+
+              '
+            zh_Hans: '可选的文档元数据，JSON格式。格式: [{"id": "metadata_field_id", "name": "field_name",
+              "value": "field_value"}]
+
+              '
+          label:
+            en_US: Metadata (JSON)
+            ja_JP: メタデータ (JSON)
+            pt_BR: Metadados (JSON)
+            zh_Hans: 元数据 (JSON)
+          llm_description: Optional metadata to assign to the document. Provide as
+            JSON array of objects with id, name, and value fields.
+          max: null
+          min: null
+          name: metadata_json
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          dataset_id: ''
+          doc_form: ''
+          doc_language: ''
+          indexing_technique: ''
+          metadata_json: ''
+          name: ''
+          process_rule: ''
+          text: ''
+        plugin_id: abesticode/knowledge_pro
+        plugin_unique_identifier: abesticode/knowledge_pro:0.0.6@73873eda46ee70c8d528c409381f705f24206d34f913ac4bfee35812c6d4a6e2
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=e03596d3ccb1a28aeb72d3a84a13f70eecc17a0e56fdb7e99bdb362c1508dad3.svg
+        provider_id: abesticode/knowledge_pro/knowledge_pro
+        provider_name: abesticode/knowledge_pro/knowledge_pro
+        provider_type: builtin
+        selected: false
+        title: 创建/更新文档
+        tool_configurations:
+          doc_form:
+            type: constant
+            value: text_model
+          doc_language:
+            type: constant
+            value: null
+          indexing_technique:
+            type: constant
+            value: high_quality
+          metadata_json:
+            type: mixed
+            value: '[{"id":"metadata_field_id","name":"field_name","value":"field_value","user_id":"{{#sys.user_id#}}"}]'
+          process_rule:
+            type: mixed
+            value: "{\n  \"mode\": \"custom\",\n  \"rules\": {\n    \"pre_processing_rules\"\
+              : [\n      {\"id\": \"remove_extra_spaces\", \"enabled\": true},\n \
+              \     {\"id\": \"remove_urls_emails\", \"enabled\": true}\n    ],\n\
+              \    \"segmentation\": {\n      \"separator\": \"\\n\\n\",\n      \"\
+              max_tokens\": 1024,\n      \"chunk_overlap\": 50\n    }\n  }\n}"
+        tool_description: 在Dify知识库中创建新文档或按名称更新现有文档
+        tool_label: 创建/更新文档
+        tool_name: create_document_by_text
+        tool_node_version: '2'
+        tool_parameters:
+          dataset_id:
+            type: mixed
+            value: 510fc8cb-47a1-4491-812d-bc000516d747
+          name:
+            type: mixed
+            value: '{{#sys.conversation_id#}}'
+          text:
+            type: mixed
+            value: '{{#1771991105446.result#}}'
+        type: tool
+      height: 192
+      id: '1772020990154'
+      position:
+        x: 3862
+        y: 0
+      positionAbsolute:
+        x: 3862
+        y: 0
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The ID of the dataset containing the document
+            ja_JP: ドキュメントを含むデータセットのID
+            pt_BR: O ID do dataset contendo o documento
+            zh_Hans: 包含文档的数据集ID
+          label:
+            en_US: Dataset ID
+            ja_JP: データセットID
+            pt_BR: ID do Dataset
+            zh_Hans: 数据集ID
+          llm_description: The unique identifier (ID) of the dataset containing the
+            document.
+          max: null
+          min: null
+          name: dataset_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The ID of the document to add chunks to
+            ja_JP: チャンクを追加するドキュメントのID
+            pt_BR: O ID do documento para adicionar chunks
+            zh_Hans: 要添加分块的文档ID
+          label:
+            en_US: Document ID
+            ja_JP: ドキュメントID
+            pt_BR: ID do Documento
+            zh_Hans: 文档ID
+          llm_description: The unique identifier (ID) of the document to add chunks
+            to.
+          max: null
+          min: null
+          name: document_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The text content for the chunk
+            ja_JP: チャンクのテキストコンテンツ
+            pt_BR: O conteúdo de texto para o chunk
+            zh_Hans: 分块的文本内容
+          label:
+            en_US: Chunk Content
+            ja_JP: チャンクコンテンツ
+            pt_BR: Conteúdo do Chunk
+            zh_Hans: 分块内容
+          llm_description: The main text content for the chunk. This is the content
+            that will be indexed and searchable.
+          max: null
+          min: null
+          name: content
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The answer for Q&A mode (optional)
+            ja_JP: Q&Aモードの回答（オプション）
+            pt_BR: A resposta para o modo Q&A (opcional)
+            zh_Hans: 问答模式的答案（可选）
+          label:
+            en_US: Answer (Q&A Mode)
+            ja_JP: 回答（Q&Aモード）
+            pt_BR: Resposta (Modo Q&A)
+            zh_Hans: 答案（问答模式）
+          llm_description: Optional answer text for Q&A mode. If provided, the content
+            is treated as a question and this as the answer.
+          max: null
+          min: null
+          name: answer
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Comma-separated keywords for the chunk (optional)
+            ja_JP: チャンクのキーワード、カンマ区切り（オプション）
+            pt_BR: Palavras-chave separadas por vírgula para o chunk (opcional)
+            zh_Hans: 分块的关键词，用逗号分隔（可选）
+          label:
+            en_US: Keywords
+            ja_JP: キーワード
+            pt_BR: Palavras-chave
+            zh_Hans: 关键词
+          llm_description: Optional comma-separated keywords for the chunk to improve
+            search relevance.
+          max: null
+          min: null
+          name: keywords
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          answer: ''
+          content: ''
+          dataset_id: ''
+          document_id: ''
+          keywords: ''
+        plugin_id: abesticode/knowledge_pro
+        plugin_unique_identifier: abesticode/knowledge_pro:0.0.6@73873eda46ee70c8d528c409381f705f24206d34f913ac4bfee35812c6d4a6e2
+        provider_icon: /console/api/workspaces/current/plugin/icon?tenant_id=4bd82eb5-13ea-4007-bae4-b10e6dd9c6af&filename=e03596d3ccb1a28aeb72d3a84a13f70eecc17a0e56fdb7e99bdb362c1508dad3.svg
+        provider_id: abesticode/knowledge_pro/knowledge_pro
+        provider_name: abesticode/knowledge_pro/knowledge_pro
+        provider_type: builtin
+        selected: false
+        title: 添加分块
+        tool_configurations: {}
+        tool_description: 向Dify知识库中的文档添加分块（段落）
+        tool_label: 添加分块
+        tool_name: add_chunks
+        tool_node_version: '2'
+        tool_parameters:
+          answer:
+            type: mixed
+            value: null
+          content:
+            type: mixed
+            value: '{{#1771991105446.result#}}'
+          dataset_id:
+            type: mixed
+            value: 510fc8cb-47a1-4491-812d-bc000516d747
+          document_id:
+            type: mixed
+            value: '{{#1772022099521.result#}}'
+          keywords:
+            type: mixed
+            value: \n\n
+        type: tool
+      height: 52
+      id: '1772021004536'
+      position:
+        x: 4546
+        y: 272
+      positionAbsolute:
+        x: 4546
+        y: 272
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "\ndef main(arg1: list,conversation_id: int):\n    for i in arg1[0][\"\
+          data\"]:\n        if i[\"name\"] == conversation_id:\n            return\
+          \ {\"result\": i[\"id\"]}\n    return {\"result\":\"error:未找到该聊天的文档id\"}"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 获取文档id
+        type: code
+        variables:
+        - value_selector:
+          - '1772020808347'
+          - json
+          value_type: array[object]
+          variable: arg1
+        - value_selector:
+          - sys
+          - conversation_id
+          value_type: string
+          variable: conversation_id
+      height: 52
+      id: '1772022099521'
+      position:
+        x: 3862
+        y: 272
+      positionAbsolute:
+        x: 3862
+        y: 272
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not contains
+            id: 55c437e8-1938-48a7-89e0-aa7b91ba0292
+            value: error
+            varType: string
+            variable_selector:
+            - '1772022099521'
+            - result
+          id: 'true'
+          logical_operator: and
+        - case_id: dcbfb60c-5bce-4a08-893b-5195b53a100e
+          conditions:
+          - comparison_operator: contains
+            id: 8ade69dd-99f1-41cb-8b6f-bcffdb1bf1b8
+            value: error
+            varType: string
+            variable_selector:
+            - '1772022099521'
+            - result
+          logical_operator: and
+        selected: false
+        title: 判断获取文档id是否成功
+        type: if-else
+      height: 172
+      id: '1772023044586'
+      position:
+        x: 4204
+        y: 212
+      positionAbsolute:
+        x: 4204
+        y: 212
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "def main(arg1: list, arg2: int):\n    try:\n        result = \"\"\n\
+          \        for i in arg1:\n            if str(arg2) in i[\"metadata\"][\"\
+          document_name\"]  :\n                result = result + i[\"content\"] +\
+          \ '\\n'\n        return {\n            \"result\": result,\n        }\n\
+          \        \n    except Exception as e:\n        return {\n            \"\
+          result\": \"\"\n        }"
+        code_language: python3
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 知识检索结果清洗
+        type: code
+        variables:
+        - value_selector:
+          - '1771965816632'
+          - result
+          value_type: array[object]
+          variable: arg1
+        - value_selector:
+          - sys
+          - conversation_id
+          value_type: string
+          variable: arg2
+      height: 52
+      id: '1772025809029'
+      position:
+        x: 2112
+        y: 250
+      positionAbsolute:
+        x: 2112
+        y: 250
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
     viewport:
-      x: 136.83125671582616
-      y: 289.2943703085364
-      zoom: 0.6093853943072869
+      x: 0
+      y: 0
+      zoom: 0.7
   rag_pipeline_variables: []
