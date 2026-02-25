@@ -1,6 +1,9 @@
 # 自用AI智能体仓库
 
 <!-- AUTO-GENERATED-START -->
+### Chatflow
+- [对话记忆持久化模板.yml](Chatflow/对话记忆持久化模板.yml)
+
 ### MCP
 - [BetterClassifier.yml](MCP/BetterClassifier.yml)
 
